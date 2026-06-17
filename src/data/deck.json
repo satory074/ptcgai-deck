@@ -44,7 +44,9 @@
             "cost": 2,
             "damage": 50
           }
-        ]
+        ],
+        "image": "https://images.scrydex.com/pokemon/me2pt5-102/small",
+        "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-102/large"
       },
       {
         "name": "Okidogi",
@@ -68,7 +70,9 @@
             "cost": 2,
             "damage": 70
           }
-        ]
+        ],
+        "image": "https://images.pokemontcg.io/sv6/111.png",
+        "imageLarge": "https://images.pokemontcg.io/sv6/111_hires.png"
       },
       {
         "name": "Sandy Shocks",
@@ -92,7 +96,9 @@
             "cost": 2,
             "damage": 60
           }
-        ]
+        ],
+        "image": "https://images.pokemontcg.io/sv5/98.png",
+        "imageLarge": "https://images.pokemontcg.io/sv5/98_hires.png"
       },
       {
         "name": "Lunatone",
@@ -116,7 +122,9 @@
             "cost": 2,
             "damage": 50
           }
-        ]
+        ],
+        "image": "https://images.pokemontcg.io/me1/74.png",
+        "imageLarge": "https://images.pokemontcg.io/me1/74_hires.png"
       },
       {
         "name": "Relicanth",
@@ -140,7 +148,9 @@
             "cost": 2,
             "damage": 30
           }
-        ]
+        ],
+        "image": "https://images.pokemontcg.io/sv5/84.png",
+        "imageLarge": "https://images.pokemontcg.io/sv5/84_hires.png"
       },
       {
         "name": "Cheren",
@@ -151,7 +161,9 @@
         "hp": null,
         "retreat": null,
         "weakness": null,
-        "moves": []
+        "moves": [],
+        "image": "https://images.scrydex.com/pokemon/me2pt5-258/small",
+        "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-258/large"
       },
       {
         "name": "Lillie's Determination",
@@ -162,7 +174,9 @@
         "hp": null,
         "retreat": null,
         "weakness": null,
-        "moves": []
+        "moves": [],
+        "image": "https://images.pokemontcg.io/me1/119.png",
+        "imageLarge": "https://images.pokemontcg.io/me1/119_hires.png"
       },
       {
         "name": "Urbain",
@@ -173,7 +187,9 @@
         "hp": null,
         "retreat": null,
         "weakness": null,
-        "moves": []
+        "moves": [],
+        "image": "https://images.scrydex.com/pokemon/me2pt5-214/small",
+        "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-214/large"
       },
       {
         "name": "Fighting Gong",
@@ -184,7 +200,9 @@
         "hp": null,
         "retreat": null,
         "weakness": null,
-        "moves": []
+        "moves": [],
+        "image": "https://images.pokemontcg.io/me1/116.png",
+        "imageLarge": "https://images.pokemontcg.io/me1/116_hires.png"
       },
       {
         "name": "Poké Pad",
@@ -195,7 +213,9 @@
         "hp": null,
         "retreat": null,
         "weakness": null,
-        "moves": []
+        "moves": [],
+        "image": "https://images.scrydex.com/pokemon/me2pt5-198/small",
+        "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-198/large"
       },
       {
         "name": "Switch",
@@ -206,7 +226,9 @@
         "hp": null,
         "retreat": null,
         "weakness": null,
-        "moves": []
+        "moves": [],
+        "image": "https://images.pokemontcg.io/me1/130.png",
+        "imageLarge": "https://images.pokemontcg.io/me1/130_hires.png"
       },
       {
         "name": "Basic {F} Energy",
@@ -217,7 +239,9 @@
         "hp": null,
         "retreat": null,
         "weakness": null,
-        "moves": []
+        "moves": [],
+        "image": "https://images.pokemontcg.io/xy12/96.png",
+        "imageLarge": "https://images.pokemontcg.io/xy12/96_hires.png"
       }
     ]
   },

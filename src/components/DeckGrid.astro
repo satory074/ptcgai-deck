@@ -10,11 +10,8 @@ const { cards } = Astro.props;
 const sections = buildSections(cards);
 const total = cards.reduce((s, c) => s + c.count, 0);
 
-// 60枚すべてを1枚ずつ並べる。トレーナーのサブグループはタイル側でサブタイプ表示するのでフラット化。
-const gridClass = (key: string) =>
-  key === "energy"
-    ? "grid grid-cols-6 sm:grid-cols-9 gap-1.5"
-    : "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2";
+// 60枚すべてを1枚ずつ（実カード画像）並べる。トレーナーのサブグループはフラット化（画像で種別が分かる）。
+const gridClass = (_key: string) => "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2";
 ---
 
 <div class="space-y-4">

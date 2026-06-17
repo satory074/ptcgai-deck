@@ -17,6 +17,8 @@ export interface Card {
   retreat: number | null;
   weakness: string | null;
   moves: Move[];
+  image?: string | null;
+  imageLarge?: string | null;
 }
 
 export interface SubGroup {

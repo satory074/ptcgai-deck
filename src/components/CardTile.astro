@@ -9,58 +9,70 @@ const { card } = Astro.props;
 const m = typeMeta(card.type);
 const accent = m?.color ?? "#8a7f6e"; // トレーナーは中立色
 const dmg = card.category === "Pokémon" ? mainDamage(card) : null;
+const hasImage = !!card.image;
 ---
 
 {
-  card.category === "Energy" ? (
-    /* エネルギー＝コンパクトな正方形（タイプ色ベタ塗り＋記号） */
-    <div
-      class="aspect-square grid place-items-center rounded-md"
-      style={`background:${accent}; color:${m?.text ?? "#fff"};`}
-      title={card.name}
-    >
-      <span class="text-lg font-bold leading-none">{m?.jp ?? "?"}</span>
-    </div>
-  ) : (
-    /* ポケモン / トレーナー＝縦長カード型タイル */
-    <div
-      class="flex h-full flex-col rounded-lg border bg-[var(--color-card)] overflow-hidden"
-      style={`border-color:${accent}66;`}
-    >
-      <div
-        class="flex items-center justify-between gap-1 px-2 py-1"
-        style={`background:${accent}1f;`}
-      >
-        {card.category === "Pokémon" ? (
-          <span
-            class="grid place-items-center w-4 h-4 rounded-full text-[10px] font-bold leading-none"
-            style={`background:${accent}; color:${m?.text ?? "#fff"};`}
-            aria-hidden="true"
-          >
-            {m?.jp}
-          </span>
-        ) : (
-          <span class="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-subtle)]">
-            {subtypeLabel(card.subtype)}
-          </span>
-        )}
-        {card.hp != null && (
-          <span class="tnum text-[10px] font-semibold text-[var(--color-text-muted)]">
-            HP {card.hp}
-          </span>
-        )}
-      </div>
-
-      <div class="flex flex-1 flex-col px-2 py-1.5">
-        <span class="text-[10px] font-medium leading-tight line-clamp-2 break-words text-[var(--color-text)]">
-          {card.name}
-        </span>
-        {dmg != null && (
-          <span class="tnum mt-auto pt-1 text-right text-sm font-bold text-[var(--color-accent-bright)]">
-            {dmg}
-          </span>
-        )}
-      </div>
-    </div>
+  /* 実カード画像（公開CDNからホットリンク）。読み込み失敗時は onerror で下のタイポタイルに切替。 */
+  hasImage && (
+    <img
+      src={card.image}
+      alt={card.name}
+      loading="lazy"
+      decoding="async"
+      width="245"
+      height="342"
+      class="block w-full h-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+    />
   )
 }
+
+<div
+  class:list={[
+    "h-full flex-col rounded-lg border bg-[var(--color-card)] overflow-hidden",
+    hasImage ? "hidden" : "flex",
+  ]}
+  style={card.category === "Energy" ? undefined : `border-color:${accent}66;`}
+>
+  {
+    card.category === "Energy" ? (
+      <div
+        class="flex-1 grid place-items-center min-h-[64px]"
+        style={`background:${accent}; color:${m?.text ?? "#fff"};`}
+        title={card.name}
+      >
+        <span class="text-lg font-bold leading-none">{m?.jp ?? "?"}</span>
+      </div>
+    ) : (
+      <>
+        <div class="flex items-center justify-between gap-1 px-2 py-1" style={`background:${accent}1f;`}>
+          {card.category === "Pokémon" ? (
+            <span
+              class="grid place-items-center w-4 h-4 rounded-full text-[10px] font-bold leading-none"
+              style={`background:${accent}; color:${m?.text ?? "#fff"};`}
+              aria-hidden="true"
+            >
+              {m?.jp}
+            </span>
+          ) : (
+            <span class="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-subtle)]">
+              {subtypeLabel(card.subtype)}
+            </span>
+          )}
+          {card.hp != null && (
+            <span class="tnum text-[10px] font-semibold text-[var(--color-text-muted)]">HP {card.hp}</span>
+          )}
+        </div>
+        <div class="flex flex-1 flex-col px-2 py-1.5">
+          <span class="text-[10px] font-medium leading-tight line-clamp-2 break-words text-[var(--color-text)]">
+            {card.name}
+          </span>
+          {dmg != null && (
+            <span class="tnum mt-auto pt-1 text-right text-sm font-bold text-[var(--color-accent-bright)]">{dmg}</span>
+          )}
+        </div>
+      </>
+    )
+  }
+</div>

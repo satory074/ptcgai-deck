@@ -23,6 +23,8 @@ const cardSchema = z.object({
   retreat: z.number().int().nullable(),
   weakness: z.string().nullable(),
   moves: z.array(moveSchema).default([]),
+  image: z.string().url().nullable().optional(),
+  imageLarge: z.string().url().nullable().optional(),
 });
 
 const deck = defineCollection({
