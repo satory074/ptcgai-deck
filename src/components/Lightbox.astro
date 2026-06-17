@@ -1,0 +1,56 @@
+---
+// クリックで開く拡大表示。ネイティブ <dialog>（Escapeで閉じる・::backdrop）+ 素のJS。
+// .card-zoom ボタン（CardTile）の data-large / data-name を読んで hi-res 画像を表示する。
+---
+
+<dialog
+  id="lightbox"
+  class="m-auto bg-transparent p-0 backdrop:bg-black/85 backdrop:backdrop-blur-sm"
+  aria-label="カード拡大表示"
+>
+  <div class="relative">
+    <img
+      id="lightbox-img"
+      src=""
+      alt=""
+      class="block max-h-[88vh] max-w-[92vw] w-auto h-auto rounded-xl shadow-2xl"
+    />
+    <button
+      id="lightbox-close"
+      type="button"
+      aria-label="閉じる"
+      class="absolute -top-3 -right-3 grid h-9 w-9 place-items-center rounded-full bg-[var(--color-raised)] text-[var(--color-text)] border border-[var(--color-border-strong)] text-lg leading-none shadow-lg hover:bg-[var(--color-accent)] hover:text-[var(--color-bg)] transition"
+    >
+      ×
+    </button>
+  </div>
+</dialog>
+
+<script>
+  const dlg = document.getElementById("lightbox") as HTMLDialogElement | null;
+  const img = document.getElementById("lightbox-img") as HTMLImageElement | null;
+
+  if (dlg && img) {
+    // カードクリックで開く（イベント委譲）。
+    document.addEventListener("click", (e) => {
+      const btn = (e.target as HTMLElement | null)?.closest<HTMLElement>(".card-zoom");
+      if (!btn) return;
+      const large = btn.dataset.large;
+      if (!large) return;
+      img.src = large;
+      img.alt = btn.dataset.name ?? "";
+      dlg.showModal();
+    });
+
+    // 背景クリック / × ボタンで閉じる（Escape はネイティブで閉じる）。
+    dlg.addEventListener("click", (e) => {
+      const t = e.target as HTMLElement;
+      if (t === dlg || t.id === "lightbox-close") dlg.close();
+    });
+
+    // 閉じたら src をクリアして次回まで読み込まない。
+    dlg.addEventListener("close", () => {
+      img.src = "";
+    });
+  }
+</script>

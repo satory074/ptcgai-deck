@@ -13,18 +13,27 @@ const hasImage = !!card.image;
 ---
 
 {
-  /* 実カード画像（公開CDNからホットリンク）。読み込み失敗時は onerror で下のタイポタイルに切替。 */
+  /* 実カード画像（公開CDNからホットリンク）。クリックで拡大（Lightbox）。
+     読み込み失敗時は onerror でボタンを隠し、下のタイポタイルに切替。 */
   hasImage && (
-    <img
-      src={card.image}
-      alt={card.name}
-      loading="lazy"
-      decoding="async"
-      width="245"
-      height="342"
-      class="block w-full h-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]"
-      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-    />
+    <button
+      type="button"
+      class="card-zoom group block w-full cursor-zoom-in rounded-lg transition hover:ring-2 hover:ring-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+      data-large={card.imageLarge ?? card.image}
+      data-name={card.name}
+      aria-label={`${card.name} を拡大表示`}
+    >
+      <img
+        src={card.image}
+        alt={card.name}
+        loading="lazy"
+        decoding="async"
+        width="245"
+        height="342"
+        class="block w-full h-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] transition group-hover:brightness-105"
+        onerror="this.closest('.card-zoom').style.display='none'; this.closest('.card-zoom').nextElementSibling.style.display='flex';"
+      />
+    </button>
   )
 }
 

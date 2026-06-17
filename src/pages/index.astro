@@ -8,6 +8,7 @@ import RationaleBlock from "@/components/RationaleBlock.astro";
 import DeckGrid from "@/components/DeckGrid.astro";
 import DeckList from "@/components/DeckList.astro";
 import Changelog from "@/components/Changelog.astro";
+import Lightbox from "@/components/Lightbox.astro";
 
 // getCollection で deck コレクションを読む＝ビルド時に Zod の「合計60枚」検証が走る。
 // 表示文字列（archetype / rationale / date 等）は素の JSON を使う（日付を文字列のまま扱うため）。
@@ -28,8 +29,9 @@ const history = deckData.history as HistoryEntry[];
     />
 
     <section>
-      <h2 class="mb-3 px-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">
+      <h2 class="mb-3 px-1 flex items-baseline gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">
         デッキ <span class="text-[var(--color-accent-bright)]">60枚</span>
+        <span class="ml-auto normal-case tracking-normal font-normal text-[var(--color-text-subtle)]">クリックで拡大</span>
       </h2>
       <DeckGrid cards={cards} />
     </section>
@@ -58,4 +60,5 @@ const history = deckData.history as HistoryEntry[];
       </p>
     </footer>
   </main>
+  <Lightbox />
 </Layout>
