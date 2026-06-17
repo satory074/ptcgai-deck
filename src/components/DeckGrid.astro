@@ -1,0 +1,49 @@
+---
+import type { Card } from "@/lib/deck";
+import { buildSections, expandCopies } from "@/lib/deck";
+import CardTile from "./CardTile.astro";
+
+interface Props {
+  cards: Card[];
+}
+const { cards } = Astro.props;
+const sections = buildSections(cards);
+const total = cards.reduce((s, c) => s + c.count, 0);
+
+// 60枚すべてを1枚ずつ並べる。トレーナーのサブグループはタイル側でサブタイプ表示するのでフラット化。
+const gridClass = (key: string) =>
+  key === "energy"
+    ? "grid grid-cols-6 sm:grid-cols-9 gap-1.5"
+    : "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2";
+---
+
+<div class="space-y-4">
+  {
+    sections.map((section) => {
+      const tiles = expandCopies(section.groups.flatMap((g) => g.cards));
+      return (
+        <section class="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] overflow-hidden">
+          <header class="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 border-l-2 border-l-[var(--color-accent)] bg-[var(--color-surface)]">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text)]">{section.label}</h3>
+            <span class="tnum text-sm font-semibold text-[var(--color-accent-bright)]">
+              {section.subtotal}
+              <span class="text-[var(--color-text-subtle)] font-normal">枚</span>
+            </span>
+          </header>
+          <div class={`px-4 sm:px-5 py-4 ${gridClass(section.key)}`}>
+            {tiles.map(({ card }) => (
+              <CardTile card={card} />
+            ))}
+          </div>
+        </section>
+      );
+    })
+  }
+
+  <div class="flex items-center justify-between rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-5 py-3.5">
+    <span class="text-sm font-medium tracking-wide text-[var(--color-text-muted)]">合計</span>
+    <span class="tnum text-2xl font-bold leading-none text-[var(--color-accent-bright)]">
+      {total}<span class="text-base font-normal text-[var(--color-text-subtle)]"> / 60</span>
+    </span>
+  </div>
+</div>

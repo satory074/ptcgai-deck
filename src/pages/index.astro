@@ -5,6 +5,7 @@ import type { Card, HistoryEntry } from "@/lib/deck";
 import Layout from "@/components/Layout.astro";
 import DeckHeader from "@/components/DeckHeader.astro";
 import RationaleBlock from "@/components/RationaleBlock.astro";
+import DeckGrid from "@/components/DeckGrid.astro";
 import DeckList from "@/components/DeckList.astro";
 import Changelog from "@/components/Changelog.astro";
 
@@ -26,9 +27,21 @@ const history = deckData.history as HistoryEntry[];
       ladder={ladder}
     />
 
+    <section>
+      <h2 class="mb-3 px-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">
+        デッキ <span class="text-[var(--color-accent-bright)]">60枚</span>
+      </h2>
+      <DeckGrid cards={cards} />
+    </section>
+
     <RationaleBlock rationale={current.rationale} energyIdentity={current.energyIdentity} />
 
-    <DeckList cards={cards} />
+    <section>
+      <h2 class="mb-3 px-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">
+        カード詳細
+      </h2>
+      <DeckList cards={cards} />
+    </section>
 
     <Changelog history={history} />
 

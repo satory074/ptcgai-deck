@@ -120,3 +120,20 @@ export function formatCost(cost: number | null): string {
   if (cost == null) return "";
   return cost === 0 ? "無" : `${cost}エネ`;
 }
+
+/** カードを枚数ぶん展開（60枚すべてを1枚ずつタイル化するため）。各コピーに通し番号を付ける。 */
+export function expandCopies(cards: Card[]): { card: Card; copy: number }[] {
+  const out: { card: Card; copy: number }[] = [];
+  for (const card of cards) {
+    for (let i = 0; i < card.count; i++) out.push({ card, copy: i });
+  }
+  return out;
+}
+
+/** ポケモンの主要技ダメージ（attack のうち最大）。技が無い/ダメージ無しなら null。 */
+export function mainDamage(card: Card): number | null {
+  const dmgs = card.moves
+    .filter((m) => m.kind === "attack" && m.damage != null)
+    .map((m) => m.damage as number);
+  return dmgs.length ? Math.max(...dmgs) : null;
+}
