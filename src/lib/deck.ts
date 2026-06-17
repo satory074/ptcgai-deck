@@ -34,17 +34,23 @@ export interface Section {
 }
 
 export interface Change {
+  date?: string;
   type: "in" | "out" | "note";
   name?: string;
   count?: number;
   reason: string;
 }
 
-export interface HistoryEntry {
-  version: string;
+/** 日付（バージョン）ごとのフル60枚スナップショット。selector で切り替える単位。 */
+export interface Snapshot {
+  id: string;
   date: string;
-  title: string;
+  label: string;
+  archetype: string;
+  rationale: string;
+  energyIdentity: string;
   changes: Change[];
+  cards: Card[];
 }
 
 /** ポケカ11タイプのメタ（記号 → 表示名・色・略号）。現状デッキは {F} のみだが将来用に全タイプ定義。 */

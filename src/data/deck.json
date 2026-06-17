@@ -14,265 +14,256 @@
     "status": "live",
     "note": "Validation Episode 通過・ラダー稼働中（μ は対戦が溜まると変動）。"
   },
-  "current": {
-    "id": "v1",
-    "label": "v1 — 闘単アグロ",
-    "date": "2026-06-16",
-    "archetype": "mono-{F}（闘単）シングルプライズ・アグロ",
-    "energyIdentity": "{F} のみ／基本闘エネルギー 18枚",
-    "rationale": "たね単エネのアタッカーだけで構成し、進化を挟まず1ターン目から殴れる速度と事故率の低さを優先した構築。全アタッカーが {F} タイプなので相手の弱点を一貫して突け、サイドを1枚しか渡さないシングルプライズで取られ負けしにくい。Cheren / Lillie's Determination / Urbain でドローを回し、Fighting Gong でエネ加速、Switch と Poké Pad で動きの安定を確保する。ex・Mega・ACE SPEC は採用せず、条件付きの派手な技も避けて「無条件で殴れる」カードに絞っている。",
-    "cards": [
-      {
-        "name": "Hitmontop",
-        "count": 4,
-        "category": "Pokémon",
-        "subtype": "Basic",
-        "type": "{F}",
-        "hp": 100,
-        "retreat": 1,
-        "weakness": "{P}",
-        "moves": [
-          {
-            "name": "Spin and Draw",
-            "kind": "attack",
-            "cost": 1,
-            "damage": null
-          },
-          {
-            "name": "Low Kick",
-            "kind": "attack",
-            "cost": 2,
-            "damage": 50
-          }
-        ],
-        "image": "https://images.scrydex.com/pokemon/me2pt5-102/small",
-        "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-102/large"
-      },
-      {
-        "name": "Okidogi",
-        "count": 4,
-        "category": "Pokémon",
-        "subtype": "Basic",
-        "type": "{F}",
-        "hp": 130,
-        "retreat": 2,
-        "weakness": "{P}",
-        "moves": [
-          {
-            "name": "Adrena-Power",
-            "kind": "ability",
-            "cost": null,
-            "damage": null
-          },
-          {
-            "name": "Good Punch",
-            "kind": "attack",
-            "cost": 2,
-            "damage": 70
-          }
-        ],
-        "image": "https://images.pokemontcg.io/sv6/111.png",
-        "imageLarge": "https://images.pokemontcg.io/sv6/111_hires.png"
-      },
-      {
-        "name": "Sandy Shocks",
-        "count": 4,
-        "category": "Pokémon",
-        "subtype": "Basic",
-        "type": "{F}",
-        "hp": 120,
-        "retreat": 2,
-        "weakness": "{G}",
-        "moves": [
-          {
-            "name": "Magnetic Burst",
-            "kind": "attack",
-            "cost": 1,
-            "damage": 20
-          },
-          {
-            "name": "Power Gem",
-            "kind": "attack",
-            "cost": 2,
-            "damage": 60
-          }
-        ],
-        "image": "https://images.pokemontcg.io/sv5/98.png",
-        "imageLarge": "https://images.pokemontcg.io/sv5/98_hires.png"
-      },
-      {
-        "name": "Lunatone",
-        "count": 3,
-        "category": "Pokémon",
-        "subtype": "Basic",
-        "type": "{F}",
-        "hp": 110,
-        "retreat": 1,
-        "weakness": "{G}",
-        "moves": [
-          {
-            "name": "Lunar Cycle",
-            "kind": "ability",
-            "cost": null,
-            "damage": null
-          },
-          {
-            "name": "Power Gem",
-            "kind": "attack",
-            "cost": 2,
-            "damage": 50
-          }
-        ],
-        "image": "https://images.pokemontcg.io/me1/74.png",
-        "imageLarge": "https://images.pokemontcg.io/me1/74_hires.png"
-      },
-      {
-        "name": "Relicanth",
-        "count": 3,
-        "category": "Pokémon",
-        "subtype": "Basic",
-        "type": "{F}",
-        "hp": 100,
-        "retreat": 1,
-        "weakness": "{G}",
-        "moves": [
-          {
-            "name": "Memory Dive",
-            "kind": "ability",
-            "cost": null,
-            "damage": null
-          },
-          {
-            "name": "Razor Fin",
-            "kind": "attack",
-            "cost": 2,
-            "damage": 30
-          }
-        ],
-        "image": "https://images.pokemontcg.io/sv5/84.png",
-        "imageLarge": "https://images.pokemontcg.io/sv5/84_hires.png"
-      },
-      {
-        "name": "Cheren",
-        "count": 4,
-        "category": "Trainer",
-        "subtype": "Supporter",
-        "type": null,
-        "hp": null,
-        "retreat": null,
-        "weakness": null,
-        "moves": [],
-        "image": "https://images.scrydex.com/pokemon/me2pt5-258/small",
-        "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-258/large"
-      },
-      {
-        "name": "Lillie's Determination",
-        "count": 4,
-        "category": "Trainer",
-        "subtype": "Supporter",
-        "type": null,
-        "hp": null,
-        "retreat": null,
-        "weakness": null,
-        "moves": [],
-        "image": "https://images.pokemontcg.io/me1/119.png",
-        "imageLarge": "https://images.pokemontcg.io/me1/119_hires.png"
-      },
-      {
-        "name": "Urbain",
-        "count": 4,
-        "category": "Trainer",
-        "subtype": "Supporter",
-        "type": null,
-        "hp": null,
-        "retreat": null,
-        "weakness": null,
-        "moves": [],
-        "image": "https://images.scrydex.com/pokemon/me2pt5-214/small",
-        "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-214/large"
-      },
-      {
-        "name": "Fighting Gong",
-        "count": 4,
-        "category": "Trainer",
-        "subtype": "Item",
-        "type": null,
-        "hp": null,
-        "retreat": null,
-        "weakness": null,
-        "moves": [],
-        "image": "https://images.pokemontcg.io/me1/116.png",
-        "imageLarge": "https://images.pokemontcg.io/me1/116_hires.png"
-      },
-      {
-        "name": "Poké Pad",
-        "count": 4,
-        "category": "Trainer",
-        "subtype": "Item",
-        "type": null,
-        "hp": null,
-        "retreat": null,
-        "weakness": null,
-        "moves": [],
-        "image": "https://images.scrydex.com/pokemon/me2pt5-198/small",
-        "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-198/large"
-      },
-      {
-        "name": "Switch",
-        "count": 4,
-        "category": "Trainer",
-        "subtype": "Item",
-        "type": null,
-        "hp": null,
-        "retreat": null,
-        "weakness": null,
-        "moves": [],
-        "image": "https://images.pokemontcg.io/me1/130.png",
-        "imageLarge": "https://images.pokemontcg.io/me1/130_hires.png"
-      },
-      {
-        "name": "Basic {F} Energy",
-        "count": 18,
-        "category": "Energy",
-        "subtype": "Basic",
-        "type": "{F}",
-        "hp": null,
-        "retreat": null,
-        "weakness": null,
-        "moves": [],
-        "image": "https://images.pokemontcg.io/xy12/96.png",
-        "imageLarge": "https://images.pokemontcg.io/xy12/96_hires.png"
-      }
-    ]
-  },
-  "history": [
+  "snapshots": [
     {
-      "version": "v1",
+      "id": "v1",
       "date": "2026-06-17",
-      "title": "ラダー投入（合法化フィックス）",
+      "label": "v1 — 闘単アグロ",
+      "archetype": "mono-{F}（闘単）シングルプライズ・アグロ",
+      "energyIdentity": "{F} のみ／基本闘エネルギー 18枚",
+      "rationale": "たね単エネのアタッカーだけで構成し、進化を挟まず1ターン目から殴れる速度と事故率の低さを優先した構築。全アタッカーが {F} タイプなので相手の弱点を一貫して突け、サイドを1枚しか渡さないシングルプライズで取られ負けしにくい。Cheren / Lillie's Determination / Urbain でドローを回し、Fighting Gong でエネ加速、Switch と Poké Pad で動きの安定を確保する。ex・Mega・ACE SPEC は採用せず、条件付きの派手な技も避けて「無条件で殴れる」カードに絞っている。",
       "changes": [
         {
+          "date": "2026-06-17",
           "type": "out",
           "name": "Master Ball",
           "count": 4,
           "reason": "ACE SPEC のため4枚積みは違反（ネイティブ検証 errorType=4）。デッキ全体が不正だった。"
         },
         {
+          "date": "2026-06-17",
           "type": "in",
           "name": "Fighting Gong",
           "count": 4,
           "reason": "枠を埋めて合法化。Validation 通過後ラダーへ投入（submission 53774986, μ₀=600）。"
-        }
-      ]
-    },
-    {
-      "version": "v1",
-      "date": "2026-06-16",
-      "title": "初版ビルド（S5）",
-      "changes": [
+        },
         {
+          "date": "2026-06-16",
           "type": "note",
-          "reason": "実プールを蒸留して mono-{F} シングルプライズ・アグロを構築。18枚の {F} たねアタッカー＋ドローサポート＋サーチ＋スイッチ＋基本闘エネ18。"
+          "reason": "初版ビルド（S5）。実プールを蒸留して mono-{F} シングルプライズ・アグロを構築。18枚の {F} たねアタッカー＋ドローサポート＋サーチ＋スイッチ＋基本闘エネ18。"
+        }
+      ],
+      "cards": [
+        {
+          "name": "Hitmontop",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 100,
+          "retreat": 1,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Spin and Draw",
+              "kind": "attack",
+              "cost": 1,
+              "damage": null
+            },
+            {
+              "name": "Low Kick",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 50
+            }
+          ],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-102/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-102/large"
+        },
+        {
+          "name": "Okidogi",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 130,
+          "retreat": 2,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Adrena-Power",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Good Punch",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 70
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv6/111.png",
+          "imageLarge": "https://images.pokemontcg.io/sv6/111_hires.png"
+        },
+        {
+          "name": "Sandy Shocks",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 120,
+          "retreat": 2,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Magnetic Burst",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 20
+            },
+            {
+              "name": "Power Gem",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 60
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv5/98.png",
+          "imageLarge": "https://images.pokemontcg.io/sv5/98_hires.png"
+        },
+        {
+          "name": "Lunatone",
+          "count": 3,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 110,
+          "retreat": 1,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Lunar Cycle",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Power Gem",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 50
+            }
+          ],
+          "image": "https://images.pokemontcg.io/me1/74.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/74_hires.png"
+        },
+        {
+          "name": "Relicanth",
+          "count": 3,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 100,
+          "retreat": 1,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Memory Dive",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Razor Fin",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 30
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv5/84.png",
+          "imageLarge": "https://images.pokemontcg.io/sv5/84_hires.png"
+        },
+        {
+          "name": "Cheren",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-258/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-258/large"
+        },
+        {
+          "name": "Lillie's Determination",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/119.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/119_hires.png"
+        },
+        {
+          "name": "Urbain",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-214/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-214/large"
+        },
+        {
+          "name": "Fighting Gong",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/116.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/116_hires.png"
+        },
+        {
+          "name": "Poké Pad",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-198/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-198/large"
+        },
+        {
+          "name": "Switch",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/130.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/130_hires.png"
+        },
+        {
+          "name": "Basic {F} Energy",
+          "count": 18,
+          "category": "Energy",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/xy12/96.png",
+          "imageLarge": "https://images.pokemontcg.io/xy12/96_hires.png"
         }
       ]
     }

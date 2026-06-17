@@ -27,20 +27,30 @@ const cardSchema = z.object({
   imageLarge: z.string().url().nullable().optional(),
 });
 
+const changeSchema = z.object({
+  date: z.string().optional(),
+  type: z.enum(["in", "out", "note"]),
+  name: z.string().optional(),
+  count: z.number().int().positive().optional(),
+  reason: z.string(),
+});
+
+// 1エントリ＝1スナップショット（日付ごとのフル60枚デッキ）。合計60を各スナップショットで強制。
 const deck = defineCollection({
-  loader: () => [{ ...data.current }],
+  loader: () => data.snapshots.map((s) => ({ ...s })),
   schema: z
     .object({
       id: z.string(),
-      label: z.string(),
       date: z.coerce.date(),
+      label: z.string(),
       archetype: z.string(),
       rationale: z.string(),
       energyIdentity: z.string(),
+      changes: z.array(changeSchema).default([]),
       cards: z.array(cardSchema).min(1),
     })
     .refine((v) => v.cards.reduce((s, c) => s + c.count, 0) === 60, (v) => ({
-      message: `deck ${v.id} must total 60 cards, got ${v.cards.reduce((s, c) => s + c.count, 0)}`,
+      message: `snapshot ${v.id} must total 60 cards, got ${v.cards.reduce((s, c) => s + c.count, 0)}`,
     })),
 });
 

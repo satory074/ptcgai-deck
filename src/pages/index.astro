@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import deckData from "@/data/deck.json";
-import type { Card, HistoryEntry } from "@/lib/deck";
+import type { Snapshot } from "@/lib/deck";
 import Layout from "@/components/Layout.astro";
 import DeckHeader from "@/components/DeckHeader.astro";
 import RationaleBlock from "@/components/RationaleBlock.astro";
@@ -10,55 +10,137 @@ import DeckList from "@/components/DeckList.astro";
 import Changelog from "@/components/Changelog.astro";
 import Lightbox from "@/components/Lightbox.astro";
 
-// getCollection で deck コレクションを読む＝ビルド時に Zod の「合計60枚」検証が走る。
-// 表示文字列（archetype / rationale / date 等）は素の JSON を使う（日付を文字列のまま扱うため）。
-const validated = (await getCollection("deck"))[0];
-const cards = validated.data.cards as Card[];
-const { meta, ladder, current } = deckData;
-const history = deckData.history as HistoryEntry[];
+// getCollection でビルド時に各スナップショットの Zod「合計60枚」検証を走らせる。
+// 描画は素の JSON（日付を文字列のまま扱う）を使い、検証件数だけ突き合わせる。
+const validated = await getCollection("deck");
+const { meta, ladder } = deckData;
+const snapshots = deckData.snapshots as Snapshot[]; // 新しい順
+if (validated.length !== snapshots.length) {
+  throw new Error("deck collection / snapshots length mismatch");
+}
+const multi = snapshots.length > 1;
+const h2 = "mb-3 px-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-subtle)]";
 ---
 
 <Layout title={meta.title}>
   <main class="mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-12 space-y-5 sm:space-y-6">
-    <DeckHeader
-      archetype={current.archetype}
-      versionLabel={current.label}
-      date={current.date}
-      energyIdentity={current.energyIdentity}
-      ladder={ladder}
-    />
+    {/* バージョン/日付の切替（2件以上ならタブ、1件なら注記） */}
+    {
+      multi ? (
+        <nav class="version-switcher flex flex-wrap items-center gap-2" aria-label="バージョン切替">
+          <span class="mr-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">日付</span>
+          {snapshots.map((snap, i) => (
+            <button
+              type="button"
+              class="vbtn rounded-full border px-3 py-1 text-xs font-medium transition"
+              data-target={snap.id}
+              aria-pressed={i === 0 ? "true" : "false"}
+            >
+              <span class="tnum">{snap.date}</span>
+              <span class="ml-1.5 text-[var(--color-text-subtle)]">{snap.id}</span>
+            </button>
+          ))}
+        </nav>
+      ) : (
+        <p class="px-1 text-xs text-[var(--color-text-subtle)]">
+          バージョン <span class="text-[var(--color-text-muted)]">{snapshots[0].id}</span> ·{" "}
+          <span class="tnum">{snapshots[0].date}</span>
+          <span class="ml-1">— デッキを更新するとここで日付ごとに切り替えできます。</span>
+        </p>
+      )
+    }
 
-    <section>
-      <h2 class="mb-3 px-1 flex items-baseline gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">
-        デッキ <span class="text-[var(--color-accent-bright)]">60枚</span>
-        <span class="ml-auto normal-case tracking-normal font-normal text-[var(--color-text-subtle)]">クリックで拡大</span>
-      </h2>
-      <DeckGrid cards={cards} />
-    </section>
+    {/* スナップショットごとのデッキ一式（アクティブ以外は hidden、JSで切替） */}
+    {
+      snapshots.map((snap, i) => (
+        <div
+          class="deck-snapshot space-y-5 sm:space-y-6"
+          data-snapshot={snap.id}
+          style={i === 0 ? undefined : "display:none"}
+        >
+          <DeckHeader
+            archetype={snap.archetype}
+            versionLabel={snap.label}
+            date={snap.date}
+            energyIdentity={snap.energyIdentity}
+            ladder={ladder}
+          />
 
-    <RationaleBlock rationale={current.rationale} energyIdentity={current.energyIdentity} />
+          <section>
+            <h2 class={`${h2} flex items-baseline gap-2`}>
+              デッキ <span class="text-[var(--color-accent-bright)]">60枚</span>
+              <span class="ml-auto normal-case tracking-normal font-normal text-[var(--color-text-subtle)]">クリックで拡大</span>
+            </h2>
+            <DeckGrid cards={snap.cards} />
+          </section>
 
-    <section>
-      <h2 class="mb-3 px-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">
-        カード詳細
-      </h2>
-      <DeckList cards={cards} />
-    </section>
+          <RationaleBlock rationale={snap.rationale} energyIdentity={snap.energyIdentity} />
 
-    <Changelog history={history} />
+          <section>
+            <h2 class={h2}>カード詳細</h2>
+            <DeckList cards={snap.cards} />
+          </section>
+        </div>
+      ))
+    }
+
+    <Changelog snapshots={snapshots} />
 
     <footer class="pt-4 pb-2 text-center text-xs leading-relaxed text-[var(--color-text-subtle)]">
       <p>
         Kaggle「<a class="underline decoration-dotted underline-offset-2 hover:text-[var(--color-text-muted)]" href="https://www.kaggle.com/competitions/pokemon-tcg-ai-battle" target="_blank" rel="noopener">pokemon-tcg-ai-battle</a>」参加エージェント ptcgai の現行デッキ。
       </p>
-      <p class="mt-1">
-        非公式・個人プロジェクト。
-      </p>
+      <p class="mt-1">非公式・個人プロジェクト。</p>
       <p class="mt-1">
         カード画像・カード名は © The Pokémon Company / Nintendo / Creatures / GAME FREAK に帰属。画像出典:
         <a class="underline decoration-dotted underline-offset-2 hover:text-[var(--color-text-muted)]" href="https://pokemontcg.io" target="_blank" rel="noopener">pokemontcg.io</a>。
       </p>
     </footer>
   </main>
+
   <Lightbox />
+
+  <style>
+    .vbtn {
+      background: var(--color-card);
+      border-color: var(--color-border);
+      color: var(--color-text-muted);
+    }
+    .vbtn[aria-pressed="true"] {
+      background: var(--color-accent-glow);
+      border-color: var(--color-accent);
+      color: var(--color-accent-bright);
+    }
+  </style>
+
+  <script>
+    // 日付（バージョン）切替: ?v=<id> とタブで表示スナップショットを切り替える。
+    const blocks = Array.from(document.querySelectorAll<HTMLElement>(".deck-snapshot"));
+    const btns = Array.from(document.querySelectorAll<HTMLElement>(".version-switcher .vbtn"));
+    const ids = blocks.map((b) => b.dataset.snapshot);
+
+    function show(id: string | undefined): boolean {
+      if (!id || !ids.includes(id)) return false;
+      blocks.forEach((b) => {
+        b.style.display = b.dataset.snapshot === id ? "" : "none";
+      });
+      btns.forEach((btn) => btn.setAttribute("aria-pressed", btn.dataset.target === id ? "true" : "false"));
+      return true;
+    }
+
+    const want = new URLSearchParams(location.search).get("v");
+    show(want && ids.includes(want) ? want : ids[0]);
+
+    btns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.target;
+        if (show(id)) {
+          const u = new URL(location.href);
+          u.searchParams.set("v", id as string);
+          history.replaceState(null, "", u);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+    });
+  </script>
 </Layout>
