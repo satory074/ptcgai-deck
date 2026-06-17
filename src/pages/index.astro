@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+import deckData from "@/data/deck.json";
+import type { Card, HistoryEntry } from "@/lib/deck";
+import Layout from "@/components/Layout.astro";
+import DeckHeader from "@/components/DeckHeader.astro";
+import RationaleBlock from "@/components/RationaleBlock.astro";
+import DeckList from "@/components/DeckList.astro";
+import Changelog from "@/components/Changelog.astro";
+
+// getCollection で deck コレクションを読む＝ビルド時に Zod の「合計60枚」検証が走る。
+// 表示文字列（archetype / rationale / date 等）は素の JSON を使う（日付を文字列のまま扱うため）。
+const validated = (await getCollection("deck"))[0];
+const cards = validated.data.cards as Card[];
+const { meta, ladder, current } = deckData;
+const history = deckData.history as HistoryEntry[];
+---
+
+<Layout title={meta.title}>
+  <main class="mx-auto max-w-2xl px-4 sm:px-6 py-8 sm:py-12 space-y-5 sm:space-y-6">
+    <DeckHeader
+      archetype={current.archetype}
+      versionLabel={current.label}
+      date={current.date}
+      energyIdentity={current.energyIdentity}
+      ladder={ladder}
+    />
+
+    <RationaleBlock rationale={current.rationale} energyIdentity={current.energyIdentity} />
+
+    <DeckList cards={cards} />
+
+    <Changelog history={history} />
+
+    <footer class="pt-4 pb-2 text-center text-xs leading-relaxed text-[var(--color-text-subtle)]">
+      <p>
+        Kaggle「<a class="underline decoration-dotted underline-offset-2 hover:text-[var(--color-text-muted)]" href="https://www.kaggle.com/competitions/pokemon-tcg-ai-battle" target="_blank" rel="noopener">pokemon-tcg-ai-battle</a>」参加エージェント ptcgai の現行デッキ。
+      </p>
+      <p class="mt-1">
+        非公式・個人プロジェクト。カード名は各権利者に帰属します。
+      </p>
+    </footer>
+  </main>
+</Layout>

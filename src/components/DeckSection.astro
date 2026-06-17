@@ -1,0 +1,40 @@
+---
+import type { Section } from "@/lib/deck";
+import CardRow from "./CardRow.astro";
+
+interface Props {
+  section: Section;
+}
+const { section } = Astro.props;
+const groupTotal = (cards: Section["groups"][number]["cards"]) =>
+  cards.reduce((s, c) => s + c.count, 0);
+---
+
+<section class="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] overflow-hidden">
+  <header class="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 border-l-2 border-l-[var(--color-accent)] bg-[var(--color-surface)]">
+    <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-text)]">{section.label}</h3>
+    <span class="tnum text-sm font-semibold text-[var(--color-accent-bright)]">
+      {section.subtotal}<span class="text-[var(--color-text-subtle)] font-normal">枚</span>
+    </span>
+  </header>
+
+  <div class="px-4 sm:px-5 py-1">
+    {
+      section.groups.map((g) => (
+        <div class="py-1">
+          {g.label && (
+            <h4 class="flex items-baseline justify-between gap-2 pt-3 pb-1 text-xs font-medium text-[var(--color-text-subtle)]">
+              <span class="uppercase tracking-wide">{g.label}</span>
+              <span class="tnum">{groupTotal(g.cards)}</span>
+            </h4>
+          )}
+          <ul>
+            {g.cards.map((c) => (
+              <CardRow card={c} />
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</section>

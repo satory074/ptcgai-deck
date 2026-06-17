@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  /* 暖色寄りのダーク面（闘タイプの土っぽさに合わせる） */
+  --color-bg: #100e0c;
+  --color-surface: #181511;
+  --color-card: #201c17;
+  --color-raised: #2a251e;
+  --color-border: #322c24;
+  --color-border-strong: #463d31;
+
+  /* テキスト */
+  --color-text: #f5f1ea;
+  --color-text-muted: #b4a999;
+  --color-text-subtle: #7e7263;
+
+  /* 闘タイプ・アクセント */
+  --color-accent: #d4763a;
+  --color-accent-bright: #f0954f;
+  --color-accent-deep: #a85420;
+  --color-accent-glow: rgba(212, 118, 58, 0.14);
+
+  /* 変更履歴の in / out */
+  --color-in: #5fae6e;
+  --color-in-bg: rgba(95, 174, 110, 0.1);
+  --color-out: #d76258;
+  --color-out-bg: rgba(215, 98, 88, 0.1);
+
+  /* タイポグラフィ（日本語チューニング） */
+  --font-sans: "Inter", "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+
+  --leading-jp-body: 1.85;
+  --leading-jp-tight: 1.55;
+
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-base: 240ms;
+}
+
+html {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+/* 数値（枚数・HP など）は等幅で桁を揃える */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+}
+
+::selection {
+  background: var(--color-accent-glow);
+}

@@ -1,0 +1,38 @@
+---
+import { typeMeta } from "@/lib/deck";
+
+interface Props {
+  type?: string | null;
+  showLabel?: boolean;
+}
+const { type, showLabel = false } = Astro.props;
+const m = typeMeta(type);
+---
+
+{
+  m &&
+    (showLabel ? (
+      <span
+        class="inline-flex items-center gap-1.5 rounded-full pl-1 pr-2.5 py-0.5 text-xs font-medium align-middle"
+        style={`background:${m.color}1f; color:${m.color}; border:1px solid ${m.color}55;`}
+        title={m.label}
+      >
+        <span
+          class="grid place-items-center w-4 h-4 rounded-full text-[10px] font-bold leading-none"
+          style={`background:${m.color}; color:${m.text};`}
+          aria-hidden="true"
+        >
+          {m.jp}
+        </span>
+        {m.label}
+      </span>
+    ) : (
+      <span
+        class="inline-grid place-items-center w-5 h-5 rounded-full text-[11px] font-bold leading-none align-middle"
+        style={`background:${m.color}; color:${m.text};`}
+        title={m.label}
+      >
+        {m.jp}
+      </span>
+    ))
+}

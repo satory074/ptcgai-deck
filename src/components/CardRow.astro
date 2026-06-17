@@ -1,0 +1,71 @@
+---
+import type { Card } from "@/lib/deck";
+import { typeMeta, formatCost } from "@/lib/deck";
+import TypeBadge from "./TypeBadge.astro";
+
+interface Props {
+  card: Card;
+}
+const { card } = Astro.props;
+const isPokemon = card.category === "Pokémon";
+const hasStats = isPokemon && (card.hp != null || card.weakness != null || card.moves.length > 0);
+---
+
+<li class="flex gap-3 py-3 border-t border-[var(--color-border)] first:border-t-0">
+  <span class="tnum shrink-0 w-10 text-right text-lg font-semibold leading-7 text-[var(--color-accent-bright)]">
+    {card.count}<span class="text-sm text-[var(--color-text-subtle)]">×</span>
+  </span>
+
+  <div class="min-w-0 flex-1">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="font-medium tracking-tight">{card.name}</span>
+      {card.type && <TypeBadge type={card.type} />}
+    </div>
+
+    {
+      hasStats && (
+        <div class="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--color-text-muted)]">
+          {card.hp != null && (
+            <span>
+              HP <span class="tnum text-[var(--color-text)]">{card.hp}</span>
+            </span>
+          )}
+          {card.retreat != null && (
+            <span>
+              にげ <span class="tnum text-[var(--color-text)]">{card.retreat}</span>
+            </span>
+          )}
+          {typeMeta(card.weakness) && (
+            <span class="inline-flex items-center gap-1">
+              弱点 <TypeBadge type={card.weakness} />
+            </span>
+          )}
+        </div>
+      )
+    }
+
+    {
+      isPokemon && card.moves.length > 0 && (
+        <ul class="mt-2 space-y-1.5">
+          {card.moves.map((mv) => (
+            <li class="flex items-center gap-2 text-xs">
+              {mv.kind === "ability" ? (
+                <span class="shrink-0 rounded px-1.5 py-0.5 font-medium text-[var(--color-accent-bright)] bg-[var(--color-accent-glow)]">
+                  特性
+                </span>
+              ) : (
+                <span class="tnum shrink-0 rounded px-1.5 py-0.5 text-[var(--color-text-muted)] bg-[var(--color-raised)] border border-[var(--color-border)]">
+                  {formatCost(mv.cost)}
+                </span>
+              )}
+              <span class="min-w-0 truncate text-[var(--color-text)]">{mv.name}</span>
+              {mv.damage != null && (
+                <span class="tnum ml-auto shrink-0 font-semibold text-[var(--color-accent-bright)]">{mv.damage}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</li>

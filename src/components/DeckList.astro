@@ -1,0 +1,23 @@
+---
+import type { Card } from "@/lib/deck";
+import { buildSections } from "@/lib/deck";
+import DeckSection from "./DeckSection.astro";
+
+interface Props {
+  cards: Card[];
+}
+const { cards } = Astro.props;
+const sections = buildSections(cards);
+const total = cards.reduce((s, c) => s + c.count, 0);
+---
+
+<div class="space-y-4">
+  {sections.map((s) => <DeckSection section={s} />)}
+
+  <div class="flex items-center justify-between rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-5 py-3.5">
+    <span class="text-sm font-medium tracking-wide text-[var(--color-text-muted)]">合計</span>
+    <span class="tnum text-2xl font-bold leading-none text-[var(--color-accent-bright)]">
+      {total}<span class="text-base font-normal text-[var(--color-text-subtle)]"> / 60</span>
+    </span>
+  </div>
+</div>

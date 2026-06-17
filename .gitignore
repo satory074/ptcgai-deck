@@ -1,0 +1,22 @@
+# build output
+dist/
+.astro/
+
+# deps
+node_modules/
+
+# env
+.env
+.env.production
+.env.local
+
+# os / editor
+.DS_Store
+*.log
+.vscode/
+.idea/
+
+# ⚠️ Competition Data — must NEVER live in this public repo.
+# Belt-and-suspenders: ignore them so an accidental copy can't be committed.
+EN_Card_Data.csv
+card_table.json
