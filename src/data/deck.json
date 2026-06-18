@@ -3,18 +3,320 @@
     "title": "ptcgai — Kaggle AI対戦ポケカ 現行デッキ",
     "agentName": "ptcgai",
     "competition": "pokemon-tcg-ai-battle",
-    "currentVersion": "v2",
+    "currentVersion": "v3",
     "updatedAt": "2026-06-18",
     "siteUrl": "https://satory074.github.io/ptcgai-deck/"
   },
   "ladder": {
-    "submissionRef": "53814269",
+    "submissionRef": "53820794",
     "mu": 600.0,
     "asOf": "2026-06-18",
-    "status": "live",
-    "note": "v2（Mega Lucario ex）投入・Validation 通過。μ は 600 から対戦が溜まると変動（v1 は 600→684 まで上昇した）。"
+    "status": "validating",
+    "note": "v3 投入（Validation 中）。μ は 600 から対戦が溜まると変動。較正実験：v1 はラダーで μ693 まで上昇、v2 は μ約500 へ下落（退行と判明）。デッキ強さは自己対戦ではなくライブμでのみ判定できると分かったため、v3（v1型＋火力）が v1 超えなら採用、ダメなら v1 を再投入して復帰する。"
   },
   "snapshots": [
+    {
+      "id": "v3",
+      "date": "2026-06-18",
+      "label": "v3 — 闘単 単プライズ・アグロ（火力強化）",
+      "archetype": "mono-{F}（闘単）シングルプライズ・アグロ（高打点・非ex）",
+      "energyIdentity": "{F} のみ／基本闘エネルギー 13枚",
+      "rationale": "ライブのラダーμ（実際の対戦レーティング）で判明：v1（単プライズ闘単）=693 に対し、v2（Mega Lucario ex）=578→約500 と 600 を割り込んで下落＝v2 は“改善”ではなく退行だった。サンプル戦で 42% だったのは『別の高HP ex デッキとの殴り合い』という非代表的な相手だったため。さらに自己対戦A/B（sim）はラダーを予測しないことも判明（v2 は sim では v1 に 73% 勝つのに実ラダーでは最下位）。v2 が弱い理由＝greedy パイロットに不利な3点：①多プライズ（ex は取られると2枚渡す）②進化依存（HP70・打点10 の Riolu が1ターン耐えて進化する必要があり、崩されると瓦解）③単一の脆い大型アタッカーに集約。そこで v3 は『ラダーで実証済みのv1 の堅牢な全たね・単プライズ型』に戻し、v1 唯一の弱点（最大70打点）だけをプール内のクリーンな高打点たねで底上げ：Sandy Shocks（場にエネ3枚以上で 130）・Sawk（闘1個で 90・無条件）・Terrakion（100）・Landorus（120）。ex も進化もコインフリップも無し、全アタッカー単プライズ。たね18枚でマリガン率 6.99%（v1/v2 の16%から改善）。デッキ強さはラダーμでしか判定できないため、v1（μ693）を超えられるかの“較正実験”として投入。",
+      "changes": [
+        {
+          "date": "2026-06-18",
+          "type": "in",
+          "name": "Sandy Shocks / Sawk / Terrakion / Landorus",
+          "reason": "クリーン（無条件）高打点の単プライズたねで火力を底上げ：Sandy Shocks 130・Sawk 90(闘1個)・Terrakion 100・Landorus 120。v1 の堅牢さを保ったまま打点不足だけを解消。"
+        },
+        {
+          "date": "2026-06-18",
+          "type": "out",
+          "name": "Mega Lucario ex / Riolu（v2 の ex・進化軸）",
+          "reason": "ライブμで v2 が退行と判明（v1 693 ＞ v2 578→約500）。多プライズ・進化依存・単一脆弱アタッカーがgreedy パイロットとラダーの多様な相手に弱い。全たね単プライズ型へ回帰。"
+        },
+        {
+          "date": "2026-06-18",
+          "type": "note",
+          "reason": "S7：自己対戦A/B（sim）はラダーμを予測しないと判明（v2 は sim 全勝でも実ラダー最下位）。以後デッキ強さの判定はライブμのみ。v3 は v1（μ693）超えを狙う較正実験（sub 53820794）。"
+        }
+      ],
+      "cards": [
+        {
+          "name": "Okidogi",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 130,
+          "retreat": 2,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Adrena-Power",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Good Punch",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 70
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv6/111.png",
+          "imageLarge": "https://images.pokemontcg.io/sv6/111_hires.png"
+        },
+        {
+          "name": "Sandy Shocks",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 120,
+          "retreat": 2,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Magnetic Burst",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 20
+            },
+            {
+              "name": "Power Gem",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 60
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv5/98.png",
+          "imageLarge": "https://images.pokemontcg.io/sv5/98_hires.png"
+        },
+        {
+          "name": "Sawk",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 110,
+          "retreat": 1,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Elbow Strike",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 30
+            },
+            {
+              "name": "Rising Chop",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 90
+            }
+          ],
+          "image": "https://images.pokemontcg.io/rsv10pt5/49.png",
+          "imageLarge": "https://images.pokemontcg.io/rsv10pt5/49_hires.png"
+        },
+        {
+          "name": "Hitmontop",
+          "count": 2,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 100,
+          "retreat": 1,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Spin and Draw",
+              "kind": "attack",
+              "cost": 1,
+              "damage": null
+            },
+            {
+              "name": "Low Kick",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 50
+            }
+          ],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-102/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-102/large"
+        },
+        {
+          "name": "Landorus",
+          "count": 2,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 120,
+          "retreat": 1,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Rock Tumble",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 50
+            },
+            {
+              "name": "Screw Knuckle",
+              "kind": "attack",
+              "cost": 3,
+              "damage": 120
+            }
+          ],
+          "image": "https://images.scrydex.com/pokemon/me3-41/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me3-41/large"
+        },
+        {
+          "name": "Terrakion",
+          "count": 2,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 140,
+          "retreat": 3,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Retaliate",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 50
+            },
+            {
+              "name": "Land Crush",
+              "kind": "attack",
+              "cost": 3,
+              "damage": 100
+            }
+          ],
+          "image": "https://images.pokemontcg.io/rsv10pt5/54.png",
+          "imageLarge": "https://images.pokemontcg.io/rsv10pt5/54_hires.png"
+        },
+        {
+          "name": "Boss’s Orders",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/sv2/172.png",
+          "imageLarge": "https://images.pokemontcg.io/sv2/172_hires.png"
+        },
+        {
+          "name": "Cheren",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-258/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-258/large"
+        },
+        {
+          "name": "Lillie's Determination",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/119.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/119_hires.png"
+        },
+        {
+          "name": "Urbain",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-214/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-214/large"
+        },
+        {
+          "name": "Fighting Gong",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/116.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/116_hires.png"
+        },
+        {
+          "name": "Poké Pad",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-198/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-198/large"
+        },
+        {
+          "name": "Switch",
+          "count": 3,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/130.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/130_hires.png"
+        },
+        {
+          "name": "Ultra Ball",
+          "count": 2,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/sv1/196.png",
+          "imageLarge": "https://images.pokemontcg.io/sv1/196_hires.png"
+        },
+        {
+          "name": "Basic {F} Energy",
+          "count": 13,
+          "category": "Energy",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/xy12/96.png",
+          "imageLarge": "https://images.pokemontcg.io/xy12/96_hires.png"
+        }
+      ]
+    },
     {
       "id": "v2",
       "date": "2026-06-18",
