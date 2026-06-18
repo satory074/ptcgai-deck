@@ -3,18 +3,310 @@
     "title": "ptcgai — Kaggle AI対戦ポケカ 現行デッキ",
     "agentName": "ptcgai",
     "competition": "pokemon-tcg-ai-battle",
-    "currentVersion": "v1",
-    "updatedAt": "2026-06-17",
+    "currentVersion": "v2",
+    "updatedAt": "2026-06-18",
     "siteUrl": "https://satory074.github.io/ptcgai-deck/"
   },
   "ladder": {
-    "submissionRef": "53774986",
-    "mu": 600,
-    "asOf": "2026-06-17",
+    "submissionRef": "53814269",
+    "mu": 600.0,
+    "asOf": "2026-06-18",
     "status": "live",
-    "note": "Validation Episode 通過・ラダー稼働中（μ は対戦が溜まると変動）。"
+    "note": "v2（Mega Lucario ex）投入・Validation 通過。μ は 600 から対戦が溜まると変動（v1 は 600→684 まで上昇した）。"
   },
   "snapshots": [
+    {
+      "id": "v2",
+      "date": "2026-06-18",
+      "label": "v2 — 闘単 Mega Lucario ex",
+      "archetype": "mono-{F}（闘単）Mega Lucario ex アグロ",
+      "energyIdentity": "{F} のみ／基本闘エネルギー 11枚",
+      "rationale": "デッキA/B診断で v1（単プライズたね・最大70ダメージ）が、サンプルの Mega Abomasnow ex（HP350・200ダメージ）に同一パイロット下で 2% しか勝てないと判明。デッキこそがボトルネックだった。そこでプール内で最もパイロット適性の高い高出力アタッカー Mega Lucario ex（Riolu から1進化・HP340・mono-{F}・Aura Jab {F}=130／Mega Brave {F}{F}=270）を主軸に採用。greedy パイロット（毎ターン手貼り1枚→最大ダメージで殴る）でも 130→270 に無理なく到達し、HP340 で取られにくい。サンプルの Mega ex ラインをパイロットは既に勝率98%で回せているため、パイロット改修ゼロでデッキ交換だけで大幅な勝率増を狙う。現行スタンダード（Mega Evolution 期）の定石比率（ポケモン12–20／トレーナー30–35／エネ8–15／ドロー8–12）に沿い、たね13枚でマリガン率16%に抑えた。",
+      "changes": [
+        {
+          "date": "2026-06-18",
+          "type": "in",
+          "name": "Mega Lucario ex",
+          "count": 4,
+          "reason": "主軸アタッカー。Riolu(4枚)から1進化、HP340・Mega Brave {F}{F}=270。同一パイロットのデッキA/Bで採用根拠を確認（v1 はサンプルに 2%）。"
+        },
+        {
+          "date": "2026-06-18",
+          "type": "in",
+          "name": "Riolu",
+          "count": 4,
+          "reason": "Mega Lucario ex の進化元（HP70＝Buddy-Buddy Poffin で確保可）。"
+        },
+        {
+          "date": "2026-06-18",
+          "type": "out",
+          "name": "Lunatone / Relicanth ほか低火力たね",
+          "count": 0,
+          "reason": "70以下の単プライズたねだけでは HP300+ の Mega ex と打点が噛み合わない。アタッカーを Mega Lucario ex に集約し、Ultra Ball / Boss's Orders / Buddy-Buddy Poffin で安定化。"
+        },
+        {
+          "date": "2026-06-18",
+          "type": "note",
+          "reason": "S6：デッキが主ボトルネックと診断（eval_ab --deck sample で v1 はサンプルに 2%）。現行メタ（Dragapult / Mega Lopunny / Mega Lucario）のベストプラクティス調査を反映して v2 を構築。"
+        }
+      ],
+      "cards": [
+        {
+          "name": "Riolu",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 70,
+          "retreat": 1,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Quick Attack",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 10
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv8pt5/50.png",
+          "imageLarge": "https://images.pokemontcg.io/sv8pt5/50_hires.png"
+        },
+        {
+          "name": "Sandy Shocks",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 120,
+          "retreat": 2,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Magnetic Burst",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 20
+            },
+            {
+              "name": "Power Gem",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 60
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv5/98.png",
+          "imageLarge": "https://images.pokemontcg.io/sv5/98_hires.png"
+        },
+        {
+          "name": "Okidogi",
+          "count": 3,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 130,
+          "retreat": 2,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Adrena-Power",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Good Punch",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 70
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv6/111.png",
+          "imageLarge": "https://images.pokemontcg.io/sv6/111_hires.png"
+        },
+        {
+          "name": "Hitmontop",
+          "count": 2,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 100,
+          "retreat": 1,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Spin and Draw",
+              "kind": "attack",
+              "cost": 1,
+              "damage": null
+            },
+            {
+              "name": "Low Kick",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 50
+            }
+          ],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-102/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-102/large"
+        },
+        {
+          "name": "Mega Lucario ex",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Stage 1",
+          "type": "{F}",
+          "hp": 340,
+          "retreat": 2,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Aura Jab",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 130
+            },
+            {
+              "name": "Mega Brave",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 270
+            }
+          ],
+          "image": "https://images.pokemontcg.io/me1/77.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/77_hires.png"
+        },
+        {
+          "name": "Cheren",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-258/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-258/large"
+        },
+        {
+          "name": "Lillie's Determination",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/119.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/119_hires.png"
+        },
+        {
+          "name": "Urbain",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-214/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-214/large"
+        },
+        {
+          "name": "Boss’s Orders",
+          "count": 3,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/sv2/172.png",
+          "imageLarge": "https://images.pokemontcg.io/sv2/172_hires.png"
+        },
+        {
+          "name": "Fighting Gong",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/116.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/116_hires.png"
+        },
+        {
+          "name": "Poké Pad",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-198/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-198/large"
+        },
+        {
+          "name": "Ultra Ball",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/sv1/196.png",
+          "imageLarge": "https://images.pokemontcg.io/sv1/196_hires.png"
+        },
+        {
+          "name": "Buddy-Buddy Poffin",
+          "count": 3,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/sv5/144.png",
+          "imageLarge": "https://images.pokemontcg.io/sv5/144_hires.png"
+        },
+        {
+          "name": "Switch",
+          "count": 2,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/130.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/130_hires.png"
+        },
+        {
+          "name": "Basic {F} Energy",
+          "count": 11,
+          "category": "Energy",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/xy12/96.png",
+          "imageLarge": "https://images.pokemontcg.io/xy12/96_hires.png"
+        }
+      ]
+    },
     {
       "id": "v1",
       "date": "2026-06-17",
