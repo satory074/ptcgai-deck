@@ -3,18 +3,275 @@
     "title": "ptcgai — Kaggle AI対戦ポケカ 現行デッキ",
     "agentName": "ptcgai",
     "competition": "pokemon-tcg-ai-battle",
-    "currentVersion": "v3",
-    "updatedAt": "2026-06-18",
+    "currentVersion": "v4",
+    "updatedAt": "2026-06-20",
     "siteUrl": "https://satory074.github.io/ptcgai-deck/"
   },
   "ladder": {
-    "submissionRef": "53820794",
-    "mu": 600.0,
-    "asOf": "2026-06-18",
-    "status": "validating",
-    "note": "v3 投入（Validation 中）。μ は 600 から対戦が溜まると変動。較正実験：v1 はラダーで μ693 まで上昇、v2 は μ約500 へ下落（退行と判明）。デッキ強さは自己対戦ではなくライブμでのみ判定できると分かったため、v3（v1型＋火力）が v1 超えなら採用、ダメなら v1 を再投入して復帰する。"
+    "submissionRef": "53868288",
+    "mu": 657.3,
+    "asOf": "2026-06-20",
+    "status": "converging",
+    "note": "v4＝初の学習方策（BC）＋実証済み最強デッキ v1。μ₀=600 から収束中（657.3・上昇傾向）。実機A/BでBCは貪欲パイロットに 72% 勝ち越し（G1ゲート通過）。v1(greedy)=672 を超えるか検証中。"
   },
   "snapshots": [
+    {
+      "id": "v4",
+      "date": "2026-06-20",
+      "label": "v4 — BC学習方策 ＋ 闘単v1デッキ",
+      "archetype": "mono-{F}（闘単）シングルプライズ・アグロ／初の学習方策（behavior cloning）で運用",
+      "energyIdentity": "{F} のみ／基本闘エネルギー 18枚（デッキは実証済みの v1）",
+      "rationale": "実証済みの最強デッキ v1（ライブμ≈672）はそのままに、パイロット（打ち手）を初の学習方策に置き換えた版。公開された上位エピソード（3日分・14,336試合・541,603手）から“勝者の手だけ”を行動クローン（BC）で学習し、自分視点のみの固定長盤面ベクトル＋合法選択肢ごとのポインタ型スコアラーで次の一手を選ぶ（相手の手札など隠れ情報はエンジン側でマスク済み＝不参照）。模倣精度は検証 val 0.605（無情報基準0.18）。重要なのは実戦での強さで、実機エンジンの同一デッキA/B（CI・150戦）で従来の貪欲パイロットに 72%（W/D/L 108/0/42・95%CI 0.643–0.786）で勝ち越し、G1の方策ゲートを突破した。「模倣精度は対戦勝率を予測しない」という通説に反し、今回は実戦勝率へ強くプラス転換。最強デッキ（v1）×最強パイロット（BC）の組み合わせで、実フィールドの μ が v1 の 672 を超えるか検証中。学習は Kaggle 無料CPU で完結し、提出物に numpy 推論を同梱（万一numpyが無くても貪欲にフォールバックして絶対に落ちない設計）。",
+      "ladder": {
+        "submissionRef": "53868288",
+        "mu": 657.3,
+        "asOf": "2026-06-20",
+        "status": "converging",
+        "note": "μ₀=600 から収束中（657.3・上昇傾向）。v1(greedy)=672 を超えるか検証中。"
+      },
+      "changes": [
+        {
+          "date": "2026-06-20",
+          "type": "in",
+          "name": "BC学習方策（behavior cloning policy）",
+          "reason": "上位リプレイ 541,603手から勝者の手をクローン（val 0.605）。実機A/Bで貪欲パイロットに 72% 勝ち越し（n=150, CI 0.643–0.786）＝G1方策ゲート通過。初の学習ベース・エージェント。"
+        },
+        {
+          "date": "2026-06-20",
+          "type": "out",
+          "name": "v3 の火力強化デッキ（較正実験）",
+          "reason": "v3 はラダーμ 545.6 で v1(672) に及ばず退行と確定。最強デッキは v1 のままが正しいと判明し、デッキを v1 へ戻して BC パイロットと組み合わせた。"
+        },
+        {
+          "date": "2026-06-20",
+          "type": "note",
+          "reason": "S8：デッキ較正は出尽くし（retreat lever 枯渇／deck A/B は診断専用）、賞金の70%＝Model（打ち手）へ投資を移した初成果。BCは Kaggle 無料CPU で学習（notebooks/）、提出物に同梱（sub 53868288）。"
+        }
+      ],
+      "cards": [
+        {
+          "name": "Hitmontop",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 100,
+          "retreat": 1,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Spin and Draw",
+              "kind": "attack",
+              "cost": 1,
+              "damage": null
+            },
+            {
+              "name": "Low Kick",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 50
+            }
+          ],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-102/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-102/large"
+        },
+        {
+          "name": "Okidogi",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 130,
+          "retreat": 2,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Adrena-Power",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Good Punch",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 70
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv6/111.png",
+          "imageLarge": "https://images.pokemontcg.io/sv6/111_hires.png"
+        },
+        {
+          "name": "Sandy Shocks",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 120,
+          "retreat": 2,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Magnetic Burst",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 20
+            },
+            {
+              "name": "Power Gem",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 60
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv5/98.png",
+          "imageLarge": "https://images.pokemontcg.io/sv5/98_hires.png"
+        },
+        {
+          "name": "Lunatone",
+          "count": 3,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 110,
+          "retreat": 1,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Lunar Cycle",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Power Gem",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 50
+            }
+          ],
+          "image": "https://images.pokemontcg.io/me1/74.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/74_hires.png"
+        },
+        {
+          "name": "Relicanth",
+          "count": 3,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 100,
+          "retreat": 1,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Memory Dive",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Razor Fin",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 30
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv5/84.png",
+          "imageLarge": "https://images.pokemontcg.io/sv5/84_hires.png"
+        },
+        {
+          "name": "Cheren",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-258/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-258/large"
+        },
+        {
+          "name": "Lillie's Determination",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/119.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/119_hires.png"
+        },
+        {
+          "name": "Urbain",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-214/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-214/large"
+        },
+        {
+          "name": "Fighting Gong",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/116.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/116_hires.png"
+        },
+        {
+          "name": "Poké Pad",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-198/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-198/large"
+        },
+        {
+          "name": "Switch",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/130.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/130_hires.png"
+        },
+        {
+          "name": "Basic {F} Energy",
+          "count": 18,
+          "category": "Energy",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/xy12/96.png",
+          "imageLarge": "https://images.pokemontcg.io/xy12/96_hires.png"
+        }
+      ]
+    },
     {
       "id": "v3",
       "date": "2026-06-18",
@@ -22,6 +279,13 @@
       "archetype": "mono-{F}（闘単）シングルプライズ・アグロ（高打点・非ex）",
       "energyIdentity": "{F} のみ／基本闘エネルギー 13枚",
       "rationale": "ライブのラダーμ（実際の対戦レーティング）で判明：v1（単プライズ闘単）=693 に対し、v2（Mega Lucario ex）=578→約500 と 600 を割り込んで下落＝v2 は“改善”ではなく退行だった。サンプル戦で 42% だったのは『別の高HP ex デッキとの殴り合い』という非代表的な相手だったため。さらに自己対戦A/B（sim）はラダーを予測しないことも判明（v2 は sim では v1 に 73% 勝つのに実ラダーでは最下位）。v2 が弱い理由＝greedy パイロットに不利な3点：①多プライズ（ex は取られると2枚渡す）②進化依存（HP70・打点10 の Riolu が1ターン耐えて進化する必要があり、崩されると瓦解）③単一の脆い大型アタッカーに集約。そこで v3 は『ラダーで実証済みのv1 の堅牢な全たね・単プライズ型』に戻し、v1 唯一の弱点（最大70打点）だけをプール内のクリーンな高打点たねで底上げ：Sandy Shocks（場にエネ3枚以上で 130）・Sawk（闘1個で 90・無条件）・Terrakion（100）・Landorus（120）。ex も進化もコインフリップも無し、全アタッカー単プライズ。たね18枚でマリガン率 6.99%（v1/v2 の16%から改善）。デッキ強さはラダーμでしか判定できないため、v1（μ693）を超えられるかの“較正実験”として投入。",
+      "ladder": {
+        "submissionRef": "53820794",
+        "mu": 545.6,
+        "asOf": "2026-06-20",
+        "status": "archived",
+        "note": "較正実験。v1(672)に及ばず退行と判明（sim⊥ladder：sim では強くてもラダーで下落）。"
+      },
       "changes": [
         {
           "date": "2026-06-18",
@@ -324,6 +588,13 @@
       "archetype": "mono-{F}（闘単）Mega Lucario ex アグロ",
       "energyIdentity": "{F} のみ／基本闘エネルギー 11枚",
       "rationale": "デッキA/B診断で v1（単プライズたね・最大70ダメージ）が、サンプルの Mega Abomasnow ex（HP350・200ダメージ）に同一パイロット下で 2% しか勝てないと判明。デッキこそがボトルネックだった。そこでプール内で最もパイロット適性の高い高出力アタッカー Mega Lucario ex（Riolu から1進化・HP340・mono-{F}・Aura Jab {F}=130／Mega Brave {F}{F}=270）を主軸に採用。greedy パイロット（毎ターン手貼り1枚→最大ダメージで殴る）でも 130→270 に無理なく到達し、HP340 で取られにくい。サンプルの Mega ex ラインをパイロットは既に勝率98%で回せているため、パイロット改修ゼロでデッキ交換だけで大幅な勝率増を狙う。現行スタンダード（Mega Evolution 期）の定石比率（ポケモン12–20／トレーナー30–35／エネ8–15／ドロー8–12）に沿い、たね13枚でマリガン率16%に抑えた。",
+      "ladder": {
+        "submissionRef": "53814269",
+        "mu": 478.9,
+        "asOf": "2026-06-20",
+        "status": "archived",
+        "note": "Mega Lucario ex 軸。ライブμで退行（多プライズ・進化依存・単一脆弱アタッカー）。"
+      },
       "changes": [
         {
           "date": "2026-06-18",
@@ -615,6 +886,13 @@
       "archetype": "mono-{F}（闘単）シングルプライズ・アグロ",
       "energyIdentity": "{F} のみ／基本闘エネルギー 18枚",
       "rationale": "たね単エネのアタッカーだけで構成し、進化を挟まず1ターン目から殴れる速度と事故率の低さを優先した構築。全アタッカーが {F} タイプなので相手の弱点を一貫して突け、サイドを1枚しか渡さないシングルプライズで取られ負けしにくい。Cheren / Lillie's Determination / Urbain でドローを回し、Fighting Gong でエネ加速、Switch と Poké Pad で動きの安定を確保する。ex・Mega・ACE SPEC は採用せず、条件付きの派手な技も避けて「無条件で殴れる」カードに絞っている。",
+      "ladder": {
+        "submissionRef": "53774986",
+        "mu": 672.3,
+        "asOf": "2026-06-20",
+        "status": "archived",
+        "note": "greedy パイロット版の最強デッキ（ピーク μ693）。v4（BC）の土台。"
+      },
       "changes": [
         {
           "date": "2026-06-17",

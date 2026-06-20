@@ -35,6 +35,15 @@ const changeSchema = z.object({
   reason: z.string(),
 });
 
+// 各スナップショットのラダーμ（過去版含め版ごとに表示）。省略時は top-level ladder にフォールバック。
+const ladderSchema = z.object({
+  submissionRef: z.string(),
+  mu: z.number(),
+  asOf: z.string(),
+  status: z.string(),
+  note: z.string().optional(),
+});
+
 // 1エントリ＝1スナップショット（日付ごとのフル60枚デッキ）。合計60を各スナップショットで強制。
 const deck = defineCollection({
   loader: () => data.snapshots.map((s) => ({ ...s })),
@@ -46,6 +55,7 @@ const deck = defineCollection({
       archetype: z.string(),
       rationale: z.string(),
       energyIdentity: z.string(),
+      ladder: ladderSchema.optional(),
       changes: z.array(changeSchema).default([]),
       cards: z.array(cardSchema).min(1),
     })

@@ -41,6 +41,15 @@ export interface Change {
   reason: string;
 }
 
+/** ラダーμ（版ごと）。top-level ladder と同形。 */
+export interface Ladder {
+  submissionRef: string;
+  mu: number;
+  asOf: string;
+  status: string;
+  note?: string;
+}
+
 /** 日付（バージョン）ごとのフル60枚スナップショット。selector で切り替える単位。 */
 export interface Snapshot {
   id: string;
@@ -49,6 +58,7 @@ export interface Snapshot {
   archetype: string;
   rationale: string;
   energyIdentity: string;
+  ladder?: Ladder;
   changes: Change[];
   cards: Card[];
 }

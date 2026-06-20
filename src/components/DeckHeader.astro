@@ -1,15 +1,24 @@
 ---
 import TypeBadge from "./TypeBadge.astro";
 
+interface Ladder { submissionRef: string; mu: number; asOf: string; status: string; note?: string }
 interface Props {
   archetype: string;
   versionLabel: string;
   date: string;
   energyIdentity: string;
-  ladder: { submissionRef: string; mu: number; asOf: string; status: string; note: string };
+  ladder?: Ladder;        // per-version μ
+  fallbackLadder: Ladder; // top-level, used when a snapshot has no own ladder
 }
-const { archetype, versionLabel, date, energyIdentity, ladder } = Astro.props;
-const statusJp = ladder.status === "live" ? "稼働中" : ladder.status;
+const { archetype, versionLabel, date, energyIdentity, ladder, fallbackLadder } = Astro.props;
+const lad = ladder ?? fallbackLadder;
+const statusJp =
+  lad.status === "live" ? "稼働中"
+  : lad.status === "converging" ? "収束中"
+  : lad.status === "validating" ? "検証中"
+  : lad.status === "archived" ? "過去版"
+  : lad.status;
+const isArchived = lad.status === "archived";
 ---
 
 <header class="relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-6 sm:px-8 py-8 sm:py-10">
@@ -45,14 +54,22 @@ const statusJp = ladder.status === "live" ? "稼働中" : ladder.status;
       </span>
     </div>
 
-    <div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] px-4 py-3 text-sm">
-      <span class="inline-flex items-center gap-2 font-medium text-[var(--color-text)]">
-        <span class="h-2 w-2 rounded-full bg-[var(--color-in)]" aria-hidden="true"></span>
-        ラダー{statusJp}
-      </span>
-      <span class="text-[var(--color-text-muted)]">μ₀ <span class="tnum text-[var(--color-text)]">{ladder.mu}</span></span>
-      <span class="text-[var(--color-text-muted)]">submission <span class="tnum text-[var(--color-text)]">{ladder.submissionRef}</span></span>
-      <span class="text-[var(--color-text-subtle)]">（{ladder.asOf} 時点）</span>
+    <div class="mt-6 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] px-4 py-3 text-sm">
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <span class="inline-flex items-center gap-2 font-medium text-[var(--color-text)]">
+          <span
+            class="h-2 w-2 rounded-full"
+            style={`background: var(${isArchived ? "--color-text-subtle" : "--color-in"})`}
+            aria-hidden="true"></span>
+          ラダー{statusJp}
+        </span>
+        <span class="text-[var(--color-text-muted)]">μ <span class="tnum text-[var(--color-text)]">{lad.mu}</span></span>
+        <span class="text-[var(--color-text-muted)]">submission <span class="tnum text-[var(--color-text)]">{lad.submissionRef}</span></span>
+        <span class="text-[var(--color-text-subtle)]">（{lad.asOf} 時点）</span>
+      </div>
+      {lad.note && (
+        <p class="mt-2 text-xs text-[var(--color-text-subtle)]" style="line-height: var(--leading-jp-body);">{lad.note}</p>
+      )}
     </div>
   </div>
 </header>
