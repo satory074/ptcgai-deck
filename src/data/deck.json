@@ -3,18 +3,263 @@
     "title": "ptcgai — Kaggle AI対戦ポケカ 現行デッキ",
     "agentName": "ptcgai",
     "competition": "pokemon-tcg-ai-battle",
-    "currentVersion": "v4",
+    "currentVersion": "v5",
     "updatedAt": "2026-06-20",
     "siteUrl": "https://satory074.github.io/ptcgai-deck/"
   },
   "ladder": {
-    "submissionRef": "53868288",
-    "mu": 657.3,
+    "submissionRef": "53885541",
+    "mu": 600.0,
     "asOf": "2026-06-20",
     "status": "converging",
-    "note": "v4＝初の学習方策（BC）＋実証済み最強デッキ v1。μ₀=600 から収束中（657.3・上昇傾向）。実機A/BでBCは貪欲パイロットに 72% 勝ち越し（G1ゲート通過）。v1(greedy)=672 を超えるか検証中。"
+    "note": "v5＝デッキ v1.1（攻撃効率強化・一貫性は v1 と同一）＋貪欲＋1手読み threat-aware。μ₀=600 から収束中。実メタ調査（89% メガユキノオー ex）と超幾何一貫性・プールDPEから構築。v1(greedy)=672 を超えるか検証中。"
   },
   "snapshots": [
+    {
+      "id": "v5",
+      "date": "2026-06-20",
+      "label": "v5 — 闘単アグロ v1.1（攻撃効率強化）",
+      "archetype": "mono-{F}（闘単）シングルプライズ・アグロ／貪欲パイロット＋1手読み threat-aware",
+      "energyIdentity": "{F} のみ／基本闘エネルギー 18枚（v1 と同一＝一貫性を一切犠牲にしない）",
+      "rationale": "実メタ調査（自分の対戦55試合, 100%デッキ復元）で、ラダーは 89% が mono-{W} メガユキノオー ex（350HP・2プライズ・弱点{M}）で、v1 はこれに 60% 勝ち越し（Wilson CI 0.46–0.73）と判明。プール解析で v1 が“最高効率のクリーンなたねアタッカー”を取りこぼしていたと分かった——Sawk(90打点@1エネ) / Throh(120@2) / Solrock(70@1) は、v1 の Hitmontop/Lunatone/Relicanth(50/50/30) より遥かに効率的。v1.1 は最弱3種をこの最高効率3種に差し替え、闘エネは18枚のまま。全てたねカードゆえ一貫性は完全に同一（マリガン6.99%・先1準備86.1%・期待エネ2.10）で、打点クロックだけを大幅改善——350HPのメガを Throh 120×3 で押し切る速度。エネを削って退行した v3 とは別物（v3はエネ18→13）。パイロットは貪欲＋1手読み threat-aware（相手のたねが次ターンに自分のアクティブをKOできるなら健全なベンチへ退避）。BC はラダーで退行（μ539）したため off。実機での検証は ladder μ のみが判定（シミュA/Bはラダーを予測しない）。sub 53885541 で提出、μ₀=600 から収束中。v1 の 672 を超えれば採用、劣れば v1 へ復帰。",
+      "ladder": {
+        "submissionRef": "53885541",
+        "mu": 600.0,
+        "asOf": "2026-06-20",
+        "status": "converging",
+        "note": "μ₀=600 から収束中。一貫性は v1 と同一で攻撃効率のみ強化＝v1(greedy)=672 を超えるか検証中。"
+      },
+      "changes": [
+        {
+          "date": "2026-06-20",
+          "type": "in",
+          "name": "Sawk(90@1) / Throh(120@2) / Solrock(70@1)",
+          "reason": "プール内で最高の“クリーンな無条件・単プライズ・たね”アタッカー（DPE 90/60/70）。v1 の弱点（最大60–70/ターンの遅い打点クロック）を、一貫性を一切犠牲にせず修正。"
+        },
+        {
+          "date": "2026-06-20",
+          "type": "out",
+          "name": "Hitmontop(50@2) / Lunatone(50@2) / Relicanth(30@2)",
+          "reason": "v1 の最低効率（DPE 25/25/15）の3種。全てたねカードなので差し替えてもマリガン/先1準備は不変。"
+        },
+        {
+          "date": "2026-06-20",
+          "type": "note",
+          "reason": "Deck-20% を“設計→ladder検証→採用/復帰”の規律ある正の貢献に。実メタ（89% メガユキノオー ex）と超幾何一貫性・プールのDPEランクから構築。攻撃効率だけ上げ過剰techは足さない（競技デッキ構築の定石）。"
+        }
+      ],
+      "cards": [
+        {
+          "name": "Okidogi",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 130,
+          "retreat": 2,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Adrena-Power",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Good Punch",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 70
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv6/111.png",
+          "imageLarge": "https://images.pokemontcg.io/sv6/111_hires.png"
+        },
+        {
+          "name": "Sandy Shocks",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 120,
+          "retreat": 2,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Magnetic Burst",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 20
+            },
+            {
+              "name": "Power Gem",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 60
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv5/98.png",
+          "imageLarge": "https://images.pokemontcg.io/sv5/98_hires.png"
+        },
+        {
+          "name": "Sawk",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 110,
+          "retreat": 1,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Elbow Strike",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 30
+            },
+            {
+              "name": "Rising Chop",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 90
+            }
+          ],
+          "image": "https://images.pokemontcg.io/rsv10pt5/49.png",
+          "imageLarge": "https://images.pokemontcg.io/rsv10pt5/49_hires.png"
+        },
+        {
+          "name": "Solrock",
+          "count": 3,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 110,
+          "retreat": 1,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Cosmic Beam",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 70
+            }
+          ],
+          "image": "https://images.pokemontcg.io/me1/75.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/75_hires.png"
+        },
+        {
+          "name": "Throh",
+          "count": 3,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 130,
+          "retreat": 2,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Shoulder Throw",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 120
+            }
+          ],
+          "image": "https://images.pokemontcg.io/zsv10pt5/50.png",
+          "imageLarge": "https://images.pokemontcg.io/zsv10pt5/50_hires.png"
+        },
+        {
+          "name": "Cheren",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-258/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-258/large"
+        },
+        {
+          "name": "Lillie's Determination",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/119.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/119_hires.png"
+        },
+        {
+          "name": "Urbain",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-214/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-214/large"
+        },
+        {
+          "name": "Fighting Gong",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/116.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/116_hires.png"
+        },
+        {
+          "name": "Poké Pad",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-198/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-198/large"
+        },
+        {
+          "name": "Switch",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/130.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/130_hires.png"
+        },
+        {
+          "name": "Basic {F} Energy",
+          "count": 18,
+          "category": "Energy",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/xy12/96.png",
+          "imageLarge": "https://images.pokemontcg.io/xy12/96_hires.png"
+        }
+      ]
+    },
     {
       "id": "v4",
       "date": "2026-06-20",
@@ -24,10 +269,10 @@
       "rationale": "実証済みの最強デッキ v1（ライブμ≈672）はそのままに、パイロット（打ち手）を初の学習方策に置き換えた版。公開された上位エピソード（3日分・14,336試合・541,603手）から“勝者の手だけ”を行動クローン（BC）で学習し、自分視点のみの固定長盤面ベクトル＋合法選択肢ごとのポインタ型スコアラーで次の一手を選ぶ（相手の手札など隠れ情報はエンジン側でマスク済み＝不参照）。模倣精度は検証 val 0.605（無情報基準0.18）。重要なのは実戦での強さで、実機エンジンの同一デッキA/B（CI・150戦）で従来の貪欲パイロットに 72%（W/D/L 108/0/42・95%CI 0.643–0.786）で勝ち越し、G1の方策ゲートを突破した。「模倣精度は対戦勝率を予測しない」という通説に反し、今回は実戦勝率へ強くプラス転換。最強デッキ（v1）×最強パイロット（BC）の組み合わせで、実フィールドの μ が v1 の 672 を超えるか検証中。学習は Kaggle 無料CPU で完結し、提出物に numpy 推論を同梱（万一numpyが無くても貪欲にフォールバックして絶対に落ちない設計）。",
       "ladder": {
         "submissionRef": "53868288",
-        "mu": 657.3,
+        "mu": 539.0,
         "asOf": "2026-06-20",
-        "status": "converging",
-        "note": "μ₀=600 から収束中（657.3・上昇傾向）。v1(greedy)=672 を超えるか検証中。"
+        "status": "regressed",
+        "note": "確定：μ=539（μ₀=600 割れ）＝退行。BC は同一デッキA/Bで貪欲に72%勝つのに、ラダーではgreedy+v1(672) に届かず＝『シミュA/Bはラダーを予測しない（sim⊥ladder）』の pilot 軸での実証。ゆえに出荷は貪欲パイロットに戻した（v5）。"
       },
       "changes": [
         {
