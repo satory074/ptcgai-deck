@@ -3,18 +3,275 @@
     "title": "ptcgai — Kaggle AI対戦ポケカ 現行デッキ",
     "agentName": "ptcgai",
     "competition": "pokemon-tcg-ai-battle",
-    "currentVersion": "v5",
-    "updatedAt": "2026-06-20",
+    "currentVersion": "v6",
+    "updatedAt": "2026-06-21",
     "siteUrl": "https://satory074.github.io/ptcgai-deck/"
   },
   "ladder": {
-    "submissionRef": "53885541",
-    "mu": 600.0,
-    "asOf": "2026-06-20",
-    "status": "converging",
-    "note": "v5＝デッキ v1.1（攻撃効率強化・一貫性は v1 と同一）＋貪欲＋1手読み threat-aware。μ₀=600 から収束中。実メタ調査（89% メガユキノオー ex）と超幾何一貫性・プールDPEから構築。v1(greedy)=672 を超えるか検証中。"
+    "submissionRef": "53774986",
+    "mu": 672.3,
+    "asOf": "2026-06-21",
+    "status": "champion",
+    "note": "v1.1（攻撃効率強化・一貫性は v1 と同一）はラダーで退行（μ=491＝μ₀600割れ／実対面の 87% メガユキノオー ex に37% しか勝てず＝v1 の 60% を下回る）。デッキ変更は v2/v3/v1.1 と4連続で退行したため、実証済みチャンピオン v1（μ≈672）へ revert・再提出して出荷デッキを固定。デッキ強さの判定は ladder μ のみ（sim⊥ladder）。"
   },
   "snapshots": [
+    {
+      "id": "v6",
+      "date": "2026-06-21",
+      "label": "v6 — チャンピオン v1 へ復帰",
+      "archetype": "mono-{F}（闘単）シングルプライズ・全たね・非ex アグロ／貪欲＋1手読み threat-aware",
+      "energyIdentity": "{F} のみ／基本闘エネルギー 18枚（実証済みの v1 構成）",
+      "rationale": "v1.1（攻撃効率強化・一貫性は v1 と同一）のラダー検証が決着：μ=491（μ₀=600 割れ）＝退行。実対面（自分の v1.1 対戦31試合）は今も 87% が mono-{W} メガユキノオー ex だが、v1.1 はこれに 37% しか勝てず（v1 は同デッキに 60% 勝ち越し）＝Throh/Sawk/Solrock への差し替えが“全試合の約9割を占める支配デッキ”との相性を悪化させた。一貫性が v1 と完全同一でも退行した事実は『打点を上げるだけでは μ は上がらず、対・支配デッキのマッチアップこそが μ を決める（しかもそれはラダーでしか見えない）』ことを示す。デッキ変更は v2/v3/v1.1 と4回連続で退行したため、実証済みチャンピオン v1（μ≈672）へ revert・再提出して出荷デッキを固定。Deck-20% の価値は『設計→ladder検証→劣れば復帰』という規律ある自然実験そのもの。以後は Model（打ち手）と Writeup に集中する。",
+      "ladder": {
+        "submissionRef": "53774986",
+        "mu": 672.3,
+        "asOf": "2026-06-21",
+        "status": "champion",
+        "note": "実証済み最強（μ≈672）。v1.1 退行(μ491)を受けて復帰・再提出し、latest-2 窓に v1 を確保。"
+      },
+      "changes": [
+        {
+          "date": "2026-06-21",
+          "type": "in",
+          "name": "デッキ v1（Okidogi/Sandy Shocks/Hitmontop/Lunatone/Relicanth の実証済み構成）",
+          "reason": "v1.1 がラダーで退行（μ491）。実証済みチャンピオン v1（μ672）へ復帰＝下振れ無しの安全策。"
+        },
+        {
+          "date": "2026-06-21",
+          "type": "out",
+          "name": "v1.1 の攻撃効率強化（Sawk 90@1 / Throh 120@2 / Solrock 70@1）",
+          "reason": "一貫性は v1 と同一でも、対メガユキノオー ex を 60%→37% に悪化させ μ491 へ退行。打点↑単独では μ は上がらない実証。"
+        },
+        {
+          "date": "2026-06-21",
+          "type": "note",
+          "reason": "デッキ変更は v2/v3/v1.1 と4連続で退行＝デッキ較正は出尽くし。賞金の 70%＝Model（打ち手）と P3 Writeup に投資を移す。"
+        }
+      ],
+      "cards": [
+        {
+          "name": "Hitmontop",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 100,
+          "retreat": 1,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Spin and Draw",
+              "kind": "attack",
+              "cost": 1,
+              "damage": null
+            },
+            {
+              "name": "Low Kick",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 50
+            }
+          ],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-102/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-102/large"
+        },
+        {
+          "name": "Okidogi",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 130,
+          "retreat": 2,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Adrena-Power",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Good Punch",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 70
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv6/111.png",
+          "imageLarge": "https://images.pokemontcg.io/sv6/111_hires.png"
+        },
+        {
+          "name": "Sandy Shocks",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 120,
+          "retreat": 2,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Magnetic Burst",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 20
+            },
+            {
+              "name": "Power Gem",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 60
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv5/98.png",
+          "imageLarge": "https://images.pokemontcg.io/sv5/98_hires.png"
+        },
+        {
+          "name": "Lunatone",
+          "count": 3,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 110,
+          "retreat": 1,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Lunar Cycle",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Power Gem",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 50
+            }
+          ],
+          "image": "https://images.pokemontcg.io/me1/74.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/74_hires.png"
+        },
+        {
+          "name": "Relicanth",
+          "count": 3,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 100,
+          "retreat": 1,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Memory Dive",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Razor Fin",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 30
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv5/84.png",
+          "imageLarge": "https://images.pokemontcg.io/sv5/84_hires.png"
+        },
+        {
+          "name": "Cheren",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-258/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-258/large"
+        },
+        {
+          "name": "Lillie's Determination",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/119.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/119_hires.png"
+        },
+        {
+          "name": "Urbain",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-214/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-214/large"
+        },
+        {
+          "name": "Fighting Gong",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/116.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/116_hires.png"
+        },
+        {
+          "name": "Poké Pad",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-198/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-198/large"
+        },
+        {
+          "name": "Switch",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/130.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/130_hires.png"
+        },
+        {
+          "name": "Basic {F} Energy",
+          "count": 18,
+          "category": "Energy",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/xy12/96.png",
+          "imageLarge": "https://images.pokemontcg.io/xy12/96_hires.png"
+        }
+      ]
+    },
     {
       "id": "v5",
       "date": "2026-06-20",
@@ -24,10 +281,10 @@
       "rationale": "実メタ調査（自分の対戦55試合, 100%デッキ復元）で、ラダーは 89% が mono-{W} メガユキノオー ex（350HP・2プライズ・弱点{M}）で、v1 はこれに 60% 勝ち越し（Wilson CI 0.46–0.73）と判明。プール解析で v1 が“最高効率のクリーンなたねアタッカー”を取りこぼしていたと分かった——Sawk(90打点@1エネ) / Throh(120@2) / Solrock(70@1) は、v1 の Hitmontop/Lunatone/Relicanth(50/50/30) より遥かに効率的。v1.1 は最弱3種をこの最高効率3種に差し替え、闘エネは18枚のまま。全てたねカードゆえ一貫性は完全に同一（マリガン6.99%・先1準備86.1%・期待エネ2.10）で、打点クロックだけを大幅改善——350HPのメガを Throh 120×3 で押し切る速度。エネを削って退行した v3 とは別物（v3はエネ18→13）。パイロットは貪欲＋1手読み threat-aware（相手のたねが次ターンに自分のアクティブをKOできるなら健全なベンチへ退避）。BC はラダーで退行（μ539）したため off。実機での検証は ladder μ のみが判定（シミュA/Bはラダーを予測しない）。sub 53885541 で提出、μ₀=600 から収束中。v1 の 672 を超えれば採用、劣れば v1 へ復帰。",
       "ladder": {
         "submissionRef": "53885541",
-        "mu": 600.0,
-        "asOf": "2026-06-20",
-        "status": "converging",
-        "note": "μ₀=600 から収束中。一貫性は v1 と同一で攻撃効率のみ強化＝v1(greedy)=672 を超えるか検証中。"
+        "mu": 491.3,
+        "asOf": "2026-06-21",
+        "status": "regressed",
+        "note": "確定：μ=491（μ₀=600 割れ）＝退行。実対面は今も 87% メガユキノオー ex だが v1.1 はこれに 37% しか勝てず（v1 は 60%）＝攻撃効率の差し替えが“全試合の約9割を占める支配デッキ”との相性を悪化。一貫性が v1 と完全同一でも退行＝『打点↑だけでは勝てず、対・支配デッキのマッチアップが μ を決める（しかもラダーでしか見えない）』。実証済みチャンピオン v1 へ復帰（v6）。"
       },
       "changes": [
         {
