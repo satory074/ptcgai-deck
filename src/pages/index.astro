@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import deckData from "@/data/deck.json";
-import type { Snapshot } from "@/lib/deck";
+import { originMeta, primaryType, type Origin, type Snapshot } from "@/lib/deck";
 import Layout from "@/components/Layout.astro";
 import DeckHeader from "@/components/DeckHeader.astro";
 import RationaleBlock from "@/components/RationaleBlock.astro";
@@ -27,20 +27,37 @@ const h2 = "mb-3 px-1 text-xs font-semibold uppercase tracking-[0.18em] text-[va
     {/* バージョン/日付の切替（2件以上ならタブ、1件なら注記） */}
     {
       multi ? (
-        <nav class="version-switcher flex flex-wrap items-center gap-2" aria-label="バージョン切替">
-          <span class="mr-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">日付</span>
-          {snapshots.map((snap, i) => (
-            <button
-              type="button"
-              class="vbtn rounded-full border px-3 py-1 text-xs font-medium transition"
-              data-target={snap.id}
-              aria-pressed={i === 0 ? "true" : "false"}
-            >
-              <span class="tnum">{snap.date}</span>
-              <span class="ml-1.5 text-[var(--color-text-subtle)]">{snap.id}</span>
-            </button>
-          ))}
-        </nav>
+        <div class="space-y-2">
+          <nav class="version-switcher flex flex-wrap items-center gap-2" aria-label="バージョン切替">
+            <span class="mr-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-subtle)]">日付</span>
+            {snapshots.map((snap, i) => (
+              <button
+                type="button"
+                class="vbtn inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium transition"
+                data-target={snap.id}
+                aria-pressed={i === 0 ? "true" : "false"}
+              >
+                <span
+                  class="mr-1.5 inline-block h-1.5 w-1.5 rounded-full"
+                  style={`background:${originMeta(snap.origin).color}`}
+                  aria-hidden="true"
+                />
+                <span class="tnum">{snap.date}</span>
+                <span class="ml-1.5 text-[var(--color-text-subtle)]">{snap.id}</span>
+              </button>
+            ))}
+          </nav>
+          <p class="flex flex-wrap items-center gap-x-3 gap-y-1 px-1 text-[11px] text-[var(--color-text-subtle)]">
+            <span class="font-medium">由来:</span>
+            {(["own", "ported", "fallback"] as Origin[]).map((o) => (
+              <span class="inline-flex items-center gap-1">
+                <span class="inline-block h-1.5 w-1.5 rounded-full" style={`background:${originMeta(o).color}`} aria-hidden="true" />
+                {originMeta(o).jp}
+              </span>
+            ))}
+            <span class="text-[var(--color-text-muted)]">— 全提出デッキの統合タイムライン（移植は出典明記／フォールバックは実測無効）</span>
+          </p>
+        </div>
       ) : (
         <p class="px-1 text-xs text-[var(--color-text-subtle)]">
           バージョン <span class="text-[var(--color-text-muted)]">{snapshots[0].id}</span> ·{" "}
@@ -63,6 +80,8 @@ const h2 = "mb-3 px-1 text-xs font-semibold uppercase tracking-[0.18em] text-[va
             versionLabel={snap.label}
             date={snap.date}
             energyIdentity={snap.energyIdentity}
+            origin={snap.origin}
+            primaryType={primaryType(snap.cards)}
             ladder={snap.ladder}
             fallbackLadder={ladder}
           />

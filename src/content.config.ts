@@ -55,6 +55,8 @@ const deck = defineCollection({
       archetype: z.string(),
       rationale: z.string(),
       energyIdentity: z.string(),
+      // 由来: own=自作系譜 / ported=コピー上位リストの移植 / fallback=ローダー不具合で意図せず出荷。
+      origin: z.enum(["own", "ported", "fallback"]).default("own"),
       ladder: ladderSchema.optional(),
       changes: z.array(changeSchema).default([]),
       cards: z.array(cardSchema).min(1),

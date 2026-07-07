@@ -50,6 +50,9 @@ export interface Ladder {
   note?: string;
 }
 
+/** 由来: 自作系譜 / コピー上位リストの移植 / ローダー不具合で意図せず出荷されたフォールバック。 */
+export type Origin = "own" | "ported" | "fallback";
+
 /** 日付（バージョン）ごとのフル60枚スナップショット。selector で切り替える単位。 */
 export interface Snapshot {
   id: string;
@@ -58,9 +61,41 @@ export interface Snapshot {
   archetype: string;
   rationale: string;
   energyIdentity: string;
+  origin?: Origin;
   ladder?: Ladder;
   changes: Change[];
   cards: Card[];
+}
+
+/** 由来バッジのメタ（表示名・色トークン）。own=緑 / ported=青 / fallback=赤。 */
+export const ORIGIN_META: Record<Origin, { jp: string; desc: string; color: string; bg: string }> = {
+  own: { jp: "自作", desc: "自分で設計したデッキ", color: "var(--color-in)", bg: "var(--color-in-bg)" },
+  ported: { jp: "移植", desc: "公開上位リストの移植（出典明記・検証対象はパイロット）", color: "var(--color-ported)", bg: "var(--color-ported-bg)" },
+  fallback: { jp: "フォールバック", desc: "ローダー不具合で意図せず出荷（実測は無効）", color: "var(--color-out)", bg: "var(--color-out-bg)" },
+};
+
+export function originMeta(o?: Origin | string | null) {
+  return ORIGIN_META[(o as Origin) in ORIGIN_META ? (o as Origin) : "own"];
+}
+
+/** デッキの代表タイプ記号（ポケモン＋基本エネの枚数で最多のもの）。ヘッダのタイプバッジ用。 */
+export function primaryType(cards: Card[]): string | null {
+  const tally: Record<string, number> = {};
+  for (const c of cards) {
+    if (!c.type) continue;
+    if (c.category === "Pokémon" || (c.category === "Energy" && c.subtype === "Basic")) {
+      tally[c.type] = (tally[c.type] ?? 0) + c.count;
+    }
+  }
+  let best: string | null = null;
+  let bestN = 0;
+  for (const [t, n] of Object.entries(tally)) {
+    if (n > bestN) {
+      best = t;
+      bestN = n;
+    }
+  }
+  return best;
 }
 
 /** ポケカ11タイプのメタ（記号 → 表示名・色・略号）。現状デッキは {F} のみだが将来用に全タイプ定義。 */

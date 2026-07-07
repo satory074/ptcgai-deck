@@ -1,5 +1,6 @@
 ---
 import TypeBadge from "./TypeBadge.astro";
+import { originMeta } from "@/lib/deck";
 
 interface Ladder { submissionRef: string; mu: number; asOf: string; status: string; note?: string }
 interface Props {
@@ -7,18 +8,29 @@ interface Props {
   versionLabel: string;
   date: string;
   energyIdentity: string;
+  origin?: string;              // own | ported | fallback
+  primaryType?: string | null;  // 代表タイプ記号（タイプバッジ用）
   ladder?: Ladder;        // per-version μ
   fallbackLadder: Ladder; // top-level, used when a snapshot has no own ladder
 }
-const { archetype, versionLabel, date, energyIdentity, ladder, fallbackLadder } = Astro.props;
+const { archetype, versionLabel, date, energyIdentity, origin, primaryType, ladder, fallbackLadder } = Astro.props;
+const om = originMeta(origin);
 const lad = ladder ?? fallbackLadder;
 const statusJp =
-  lad.status === "live" ? "稼働中"
+  lad.status === "champion" ? "チャンピオン"
+  : lad.status === "experimental-best" ? "実験ベスト"
+  : lad.status === "regressed" ? "退行"
+  : lad.status === "void" ? "無効"
+  : lad.status === "live" ? "稼働中"
   : lad.status === "converging" ? "収束中"
   : lad.status === "validating" ? "検証中"
   : lad.status === "archived" ? "過去版"
   : lad.status;
-const isArchived = lad.status === "archived";
+// dot color: 退行/無効=赤, 過去版=灰, それ以外(チャンピオン/実験ベスト/稼働中…)=緑
+const dotVar =
+  lad.status === "regressed" || lad.status === "void" ? "--color-out"
+  : lad.status === "archived" ? "--color-text-subtle"
+  : "--color-in";
 ---
 
 <header class="relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-6 sm:px-8 py-8 sm:py-10">
@@ -38,11 +50,18 @@ const isArchived = lad.status === "archived";
     </h1>
 
     <p class="mt-3 flex flex-wrap items-center gap-2 text-base text-[var(--color-text-muted)]">
-      <TypeBadge type="{F}" showLabel />
+      {primaryType && <TypeBadge type={primaryType} showLabel />}
       <span>{archetype}</span>
     </p>
 
     <div class="mt-5 flex flex-wrap items-center gap-2 text-xs">
+      <span
+        class="rounded-full border px-3 py-1 font-semibold"
+        style={`color:${om.color}; border-color:${om.color}; background:${om.bg};`}
+        title={om.desc}
+      >
+        {om.jp}
+      </span>
       <span class="rounded-full border border-[var(--color-border-strong)] bg-[var(--color-card)] px-3 py-1 font-medium text-[var(--color-text)]">
         {versionLabel}<span class="tnum ml-2 font-normal text-[var(--color-text-subtle)]">{date}</span>
       </span>
@@ -59,7 +78,7 @@ const isArchived = lad.status === "archived";
         <span class="inline-flex items-center gap-2 font-medium text-[var(--color-text)]">
           <span
             class="h-2 w-2 rounded-full"
-            style={`background: var(${isArchived ? "--color-text-subtle" : "--color-in"})`}
+            style={`background: var(${dotVar})`}
             aria-hidden="true"></span>
           ラダー{statusJp}
         </span>

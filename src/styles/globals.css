@@ -26,6 +26,10 @@
   --color-out: #d76258;
   --color-out-bg: rgba(215, 98, 88, 0.1);
 
+  /* 由来（origin）バッジ: own=in(緑) / ported=青 / fallback=out(赤) */
+  --color-ported: #6b9bd1;
+  --color-ported-bg: rgba(107, 155, 209, 0.12);
+
   /* タイポグラフィ（日本語チューニング） */
   --font-sans: "Inter", "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;

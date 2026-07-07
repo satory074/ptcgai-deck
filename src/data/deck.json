@@ -4,7 +4,7 @@
     "agentName": "ptcgai",
     "competition": "pokemon-tcg-ai-battle",
     "currentVersion": "v6",
-    "updatedAt": "2026-07-01",
+    "updatedAt": "2026-07-08",
     "siteUrl": "https://satory074.github.io/ptcgai-deck/"
   },
   "ladder": {
@@ -12,9 +12,1271 @@
     "mu": 672.3,
     "asOf": "2026-07-01",
     "status": "champion",
-    "note": "評価方法論アップデート（2026-07-01）：本プロジェクトの核は『ノイズの多いスキルレーティングを正しく測る、自己訂正的な評価方法論』。ラダー μ は TrueSkill 系で序盤の対戦分散に経路依存するため、単一の μ 値（例：初期の μ≈672）は真の実力を過大にも過小にも示しうる——同一デッキを再提出しても異なる μ に収束する（v1 の正直な実力は μ≈470–550）。そこで公式 ListEpisodes API で per-game の真値を取り、相手 μ を揃えた統制比較（Wilson 信頼区間）で評価し直すと、デッキ v1/v2/v3/v1.1 は実力が拮抗（有意差なし）、学習方策(BC)もヒューリスティックと統計的に同等だった。＝『単一 μ や シミュ A/B を額面で信じず、相手 μ を揃えて区間付きで比較する』規律こそが Strategy（Model 70%）の貢献。🆕 最新（7/1）：我々が当初『対戦エンジンは探索を許さない』と誤って結論していた公式エンジン内蔵の探索 API を発見・一次検証し、決定時 MCTS エージェント（子プロセス隔離で never-crash・残り持ち時間からの予算配分で never-timeout）を構築。同一デッキ・同条件で相手 μ を揃えて収束比較した結果、素朴実装（相手の隠れ札をダミーで埋める粗い determinization＋NN不要ロールアウト＋控えめ予算）はgreedy チャンピオンと互角〜わずかに下だった（初期 n=37 では上回って見えたが小n ノイズで、n=53 収束で勝率 43% vs 48% に回帰）。＝μ を実際に上げるには良い belief/value が要る（『探索は良い評価関数とセットでこそ効く』という教科書どおりの結論）——が、『誤前提を自ら計測で見つけ、未バインドの公式 API を発見して、堅牢な探索エージェントを構築・検証し、素朴版の限界まで正直に測る』この自己訂正の過程そのものが Model-70% の中核エビデンス。※掲載は自作デッキ系譜（v1–v6）のみ。近時の実験はコピーした上位リスト上での“打ち手（思考ルーチン）”検証のため非掲載＝自作デッキのみ掲載する方針（出荷 deck.csv は v1 のまま）。各版（v1–v6）の注記は当時の理解の記録。"
+    "note": "評価方法論アップデート（2026-07-01）：本プロジェクトの核は『ノイズの多いスキルレーティングを正しく測る、自己訂正的な評価方法論』。ラダー μ は TrueSkill 系で序盤の対戦分散に経路依存するため、単一の μ 値（例：初期の μ≈672）は真の実力を過大にも過小にも示しうる——同一デッキを再提出しても異なる μ に収束する（v1 の正直な実力は μ≈470–550）。そこで公式 ListEpisodes API で per-game の真値を取り、相手 μ を揃えた統制比較（Wilson 信頼区間）で評価し直すと、デッキ v1/v2/v3/v1.1 は実力が拮抗（有意差なし）、学習方策(BC)もヒューリスティックと統計的に同等だった。＝『単一 μ や シミュ A/B を額面で信じず、相手 μ を揃えて区間付きで比較する』規律こそが Strategy（Model 70%）の貢献。🆕 最新（7/1）：我々が当初『対戦エンジンは探索を許さない』と誤って結論していた公式エンジン内蔵の探索 API を発見・一次検証し、決定時 MCTS エージェント（子プロセス隔離で never-crash・残り持ち時間からの予算配分で never-timeout）を構築。同一デッキ・同条件で相手 μ を揃えて収束比較した結果、素朴実装（相手の隠れ札をダミーで埋める粗い determinization＋NN不要ロールアウト＋控えめ予算）はgreedy チャンピオンと互角〜わずかに下だった（初期 n=37 では上回って見えたが小n ノイズで、n=53 収束で勝率 43% vs 48% に回帰）。＝μ を実際に上げるには良い belief/value が要る（『探索は良い評価関数とセットでこそ効く』という教科書どおりの結論）——が、『誤前提を自ら計測で見つけ、未バインドの公式 API を発見して、堅牢な探索エージェントを構築・検証し、素朴版の限界まで正直に測る』この自己訂正の過程そのものが Model-70% の中核エビデンス。🆕 掲載方針を変更（2026-07-08）：本ページは“全提出デッキの統合タイムライン”＝自作系譜（v1–v6, origin=own）に加え、コピーした上位リストの移植（origin=ported：Archaludon ex／Alakazam／Hop's、各出典を明記）と、ローダー不具合で意図せず出荷されたフォールバック期（origin=fallback, E20–E26v1）も正直に併記する。移植エントリは“デッキ”ではなく“打ち手（パイロット）＋評価規律”の検証台＝我々の貢献はそこにあり、デッキの独自性は主張しない。現時点の実測ベストは移植 Archaludon ex（E32, 生μ≈866.7／相手μ統制 53.8%）だが、出荷 committed deck.csv は現状 v1（v6）のまま＝ポートは実験トラック。各版の注記は当時の理解の記録。"
   },
   "snapshots": [
+    {
+      "id": "archaludon",
+      "date": "2026-07-06",
+      "label": "Archaludon ex（移植：tomatomato 公開エージェント）— 実測ベスト",
+      "archetype": "Archaludon ex（Duraludon 1進化）＋ Cinderace 2進化エンジンのコントロール",
+      "energyIdentity": "{M} 中心／基本鋼エネルギー 11枚（移植元リストのまま）",
+      "rationale": "【移植・出典明記】tomatomato 氏の公開エージェント（設計 writeup ＋サンプルエージェント公開）の Archaludon ex デッキを、我々の never-crash シャシー上に載せた版。デッキは我々の設計ではない——本エントリの目的は“コピーした上位リスト上でのパイロット（打ち手＝思考ルーチン）と評価規律の検証”であり、貢献はデッキではなくパイロット＋自己訂正的な計測にある。経緯：E26v2/E28/E29 は正しい Archaludon デッキを出荷できていたが、移植パイロットが読み込み時の無音ゲートで実質 INERT（＝素の greedy が回していた）と frame_check で判明（ラダー==greedy）。E32（sub 54395800）でパイロットを蘇生（frame_check 95.7% pilot-identity）——生 μ≈866.7／相手μ統制 53.8% ＝本プロジェクト初の“真のデッキ特化パイロット”の実測値であり、現時点の実測ベスト。E33（sub 54427882）はその上でのフォレンジック駆動チューニング1サイクル（対照＝E32＝867、判定は収束待ち）。",
+      "origin": "ported",
+      "ladder": {
+        "submissionRef": "54395800",
+        "mu": 866.7,
+        "asOf": "2026-07-06",
+        "status": "experimental-best",
+        "note": "E32：パイロット蘇生後の初の真の実測（frame_check 95.7%）。生μ≈866.7／相手μ統制 53.8%。E26v2–E30 は正デッキだがパイロット INERT（frame_check でラダー==greedy）＝それらの相手μ 35–38% は“素 greedy が上位デッキを回した”値。E33（54427882）はチューニング1サイクル、収束待ち。出荷 committed deck.csv は v1 のまま＝これは実験トラック。"
+      },
+      "changes": [
+        {
+          "date": "2026-07-06",
+          "type": "in",
+          "name": "Archaludon ex パイロット（tomatomato 移植）を蘇生",
+          "reason": "E26v2–E30 は無音ゲートでパイロット INERT だった。ブートストラップ修正で実際に稼働（frame_check 95.7%）＝生μ≈866.7、初の真のデッキ特化実測。"
+        },
+        {
+          "date": "2026-07-06",
+          "type": "note",
+          "reason": "掲載方針変更で追加（origin=ported）。デッキは tomatomato 氏の公開リスト。我々の貢献はパイロット＋評価規律であり、デッキの独自性は主張しない（出典明記）。"
+        }
+      ],
+      "cards": [
+        {
+          "name": "Duraludon",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{M}",
+          "hp": 130,
+          "retreat": 2,
+          "weakness": "{R}",
+          "moves": [
+            {
+              "name": "Hammer In",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 30
+            },
+            {
+              "name": "Raging Hammer",
+              "kind": "attack",
+              "cost": 3,
+              "damage": 80
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Relicanth",
+          "count": 1,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 100,
+          "retreat": 1,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Memory Dive",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Razor Fin",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 30
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv5/84.png",
+          "imageLarge": "https://images.pokemontcg.io/sv5/84_hires.png"
+        },
+        {
+          "name": "Archaludon ex",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Stage 1",
+          "type": "{M}",
+          "hp": 300,
+          "retreat": 2,
+          "weakness": "{R}",
+          "moves": [
+            {
+              "name": "Assemble Alloy",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Metal Defender",
+              "kind": "attack",
+              "cost": 3,
+              "damage": 220
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Cinderace",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Stage 2",
+          "type": "{R}",
+          "hp": 160,
+          "retreat": null,
+          "weakness": "{W}",
+          "moves": [
+            {
+              "name": "Explosiveness",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Turbo Flare",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 50
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Boss’s Orders",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/sv2/172.png",
+          "imageLarge": "https://images.pokemontcg.io/sv2/172_hires.png"
+        },
+        {
+          "name": "Explorer’s Guidance",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Lillie's Determination",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/119.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/119_hires.png"
+        },
+        {
+          "name": "Jumbo Ice Cream",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Poké Pad",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-198/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-198/large"
+        },
+        {
+          "name": "Pokégear 3.0",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Ultra Ball",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/sv1/196.png",
+          "imageLarge": "https://images.pokemontcg.io/sv1/196_hires.png"
+        },
+        {
+          "name": "Night Stretcher",
+          "count": 3,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Full Metal Lab",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Stadium",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Hero’s Cape",
+          "count": 1,
+          "category": "Trainer",
+          "subtype": "Tool",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Basic {M} Energy",
+          "count": 11,
+          "category": "Energy",
+          "subtype": "Basic",
+          "type": "{M}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        }
+      ]
+    },
+    {
+      "id": "alakazam",
+      "date": "2026-07-04",
+      "label": "Alakazam（移植：sue124 パッケージ）",
+      "archetype": "Alakazam（Abra→Kadabra→Alakazam 2進化）{P} コントロール＋ Dudunsparce ドロー",
+      "energyIdentity": "{P}／基本超エネ 2＋特殊エネルギー",
+      "rationale": "【移植・出典明記】sue124 氏（いわゆる“5位”Alakazam パッケージ）のラダー実績デッキを移植した版（E30, sub 54312789）。相手μ統制で 22.7%＝移植元の現在のLBグレード（≈462）に忠実な低さ。加えてこの時点では移植パイロットがまだ無音で INERT（素 greedy が2進化デッキを回した）ため実測は低い。“公開サンプルの単純移植は 460–800 に着地する”という較正（2026-07-05）とも整合。デッキは我々の設計ではなく、検証対象はパイロット＋評価規律。",
+      "origin": "ported",
+      "ladder": {
+        "submissionRef": "54312789",
+        "mu": 160.9,
+        "asOf": "2026-07-04",
+        "status": "regressed",
+        "note": "生μ 160.9／相手μ統制 22.7%。移植元 sue124 の現在LB≈462に忠実。パイロットはこの時点でまだ INERT（E32 で蘇生）。＝“公開サンプルの単純移植”は 460–800 に着地する較正の一例。"
+      },
+      "changes": [
+        {
+          "date": "2026-07-04",
+          "type": "in",
+          "name": "Alakazam デッキ（sue124 移植）",
+          "reason": "作者の現在値で較正するための移植（E30）。相手μ 22.7%＝移植元グレードに忠実。"
+        },
+        {
+          "date": "2026-07-04",
+          "type": "note",
+          "reason": "origin=ported。デッキは sue124 氏の公開リスト（出典明記）。貢献はパイロット＋評価規律。"
+        }
+      ],
+      "cards": [
+        {
+          "name": "Abra",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{P}",
+          "hp": 50,
+          "retreat": 1,
+          "weakness": "{D}",
+          "moves": [
+            {
+              "name": "Teleportation Attack",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 10
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Dunsparce",
+          "count": 3,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{C}",
+          "hp": 70,
+          "retreat": 1,
+          "weakness": "{F}",
+          "moves": [
+            {
+              "name": "Trading Places",
+              "kind": "attack",
+              "cost": 1,
+              "damage": null
+            },
+            {
+              "name": "Ram",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 20
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Fezandipiti ex",
+          "count": 1,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{D}",
+          "hp": 210,
+          "retreat": 1,
+          "weakness": "{F}",
+          "moves": [
+            {
+              "name": "Flip the Script",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Cruel Arrow",
+              "kind": "attack",
+              "cost": 3,
+              "damage": null
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Genesect",
+          "count": 1,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{M}",
+          "hp": 110,
+          "retreat": 1,
+          "weakness": "{R}",
+          "moves": [
+            {
+              "name": "ACE Nullifier",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Magnetic Blast",
+              "kind": "attack",
+              "cost": 3,
+              "damage": 100
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Psyduck",
+          "count": 1,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{W}",
+          "hp": 70,
+          "retreat": 1,
+          "weakness": "{L}",
+          "moves": [
+            {
+              "name": "Damp",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Ram",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 20
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Shaymin",
+          "count": 1,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{G}",
+          "hp": 80,
+          "retreat": 1,
+          "weakness": "{R}",
+          "moves": [
+            {
+              "name": "Flower Curtain",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Smash Kick",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 30
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Kadabra",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Stage 1",
+          "type": "{P}",
+          "hp": 80,
+          "retreat": 1,
+          "weakness": "{D}",
+          "moves": [
+            {
+              "name": "Psychic Draw",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Super Psy Bolt",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 30
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Dudunsparce",
+          "count": 2,
+          "category": "Pokémon",
+          "subtype": "Stage 1",
+          "type": "{C}",
+          "hp": 140,
+          "retreat": 3,
+          "weakness": "{F}",
+          "moves": [
+            {
+              "name": "Run Away Draw",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Land Crush",
+              "kind": "attack",
+              "cost": 3,
+              "damage": 90
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Alakazam",
+          "count": 3,
+          "category": "Pokémon",
+          "subtype": "Stage 2",
+          "type": "{P}",
+          "hp": 140,
+          "retreat": 1,
+          "weakness": "{D}",
+          "moves": [
+            {
+              "name": "Psychic Draw",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Powerful Hand",
+              "kind": "attack",
+              "cost": 1,
+              "damage": null
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Dawn",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Hilda",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Boss’s Orders",
+          "count": 2,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/sv2/172.png",
+          "imageLarge": "https://images.pokemontcg.io/sv2/172_hires.png"
+        },
+        {
+          "name": "Buddy-Buddy Poffin",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/sv5/144.png",
+          "imageLarge": "https://images.pokemontcg.io/sv5/144_hires.png"
+        },
+        {
+          "name": "Poké Pad",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-198/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-198/large"
+        },
+        {
+          "name": "Enhanced Hammer",
+          "count": 3,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Rare Candy",
+          "count": 3,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Night Stretcher",
+          "count": 1,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Sacred Ash",
+          "count": 1,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Battle Cage",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Stadium",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Lucky Helmet",
+          "count": 3,
+          "category": "Trainer",
+          "subtype": "Tool",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Basic {P} Energy",
+          "count": 2,
+          "category": "Energy",
+          "subtype": "Basic",
+          "type": "{P}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Telepath Psychic Energy",
+          "count": 4,
+          "category": "Energy",
+          "subtype": "Special",
+          "type": "{P}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Enriching Energy",
+          "count": 1,
+          "category": "Energy",
+          "subtype": "Special",
+          "type": "{C}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        }
+      ]
+    },
+    {
+      "id": "fallback",
+      "date": "2026-07-02",
+      "label": "フォールバック混入期（ローダー不具合 E20–E26v1）— 実測は全て無効",
+      "archetype": "cabt サンプルデッキ（mono-{W} Mega Abomasnow ex）＝意図せず出荷された実デッキ",
+      "energyIdentity": "{W}／基本水エネルギー 33枚（サンプル既定の構成）",
+      "rationale": "【正直な負の記録／自己訂正】E27（2026-07-03）のフォレンジックで判明：Kaggle ハーネスは main.py を空の globals で exec するため __file__ が未定義になり、Path(__file__) ベースの全ローダー（_load_deck／_load_card_table／_load_bc）が無音でフォールバックしていた。＝6/25–7/2 の全実験は“このサンプルデッキ＋カード無知の greedy”を出荷していた（リプレイ step-1 のデッキアクションで確定）。意図したデッキは一度も出ていない：Hop's（E20/E24/E25）、ShumpeiNomura mono-{M}（E23）、Archaludon（E26v1）。この期間の μ（407–581）の広がりは“1つの壊れたエージェントの生μドリフト”であり全て無効。E26v2 で main._bundle_file()（CWD→/kaggle_simulations/agent→__file__ 解決）により修正。この“無音故障を計測で発見し、公開して正す”過程こそ Strategy（Model 70%）の中核エビデンス。",
+      "origin": "fallback",
+      "ladder": {
+        "submissionRef": "54042019",
+        "mu": 567.0,
+        "asOf": "2026-07-02",
+        "status": "void",
+        "note": "VOID：E20–E26v1（sub 54042019…54267230）の全μ（407–581、有名な“567”を含む）は無効＝実際にはこのサンプルデッキ＋素 greedy が出荷されていた。E26v2 でローダー修正。"
+      },
+      "changes": [
+        {
+          "date": "2026-07-03",
+          "type": "note",
+          "reason": "E27：__file__ 未定義で全ローダーが無音フォールバック＝6/25–7/2 はサンプルデッキを出荷。意図した Hop's／mono-{M}／Archaludon は未出荷。当該期間の実測は全て無効。"
+        },
+        {
+          "date": "2026-07-02",
+          "type": "note",
+          "reason": "E26v2 で main._bundle_file() により修正。以後“提出直後のリプレイ・デッキ確認”を恒久ゲート化。"
+        }
+      ],
+      "cards": [
+        {
+          "name": "Snover",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{W}",
+          "hp": 90,
+          "retreat": 3,
+          "weakness": "{M}",
+          "moves": [
+            {
+              "name": "Beat",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 10
+            },
+            {
+              "name": "Icy Snow",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 30
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Kyogre",
+          "count": 2,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{W}",
+          "hp": 150,
+          "retreat": 3,
+          "weakness": "{L}",
+          "moves": [
+            {
+              "name": "Riptide",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 20
+            },
+            {
+              "name": "Swirling Waves",
+              "kind": "attack",
+              "cost": 3,
+              "damage": 130
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Mega Abomasnow ex",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Stage 1",
+          "type": "{W}",
+          "hp": 350,
+          "retreat": 4,
+          "weakness": "{M}",
+          "moves": [
+            {
+              "name": "Hammer-lanche",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 100
+            },
+            {
+              "name": "Frost Barrier",
+              "kind": "attack",
+              "cost": 3,
+              "damage": 200
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Lillie's Determination",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/119.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/119_hires.png"
+        },
+        {
+          "name": "Team Rocket's Petrel",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Mega Signal",
+          "count": 2,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Ultra Ball",
+          "count": 2,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/sv1/196.png",
+          "imageLarge": "https://images.pokemontcg.io/sv1/196_hires.png"
+        },
+        {
+          "name": "Secret Box",
+          "count": 1,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Surfing Beach",
+          "count": 2,
+          "category": "Trainer",
+          "subtype": "Stadium",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Powerglass",
+          "count": 2,
+          "category": "Trainer",
+          "subtype": "Tool",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Basic {W} Energy",
+          "count": 33,
+          "category": "Energy",
+          "subtype": "Basic",
+          "type": "{W}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        }
+      ]
+    },
+    {
+      "id": "hop",
+      "date": "2026-06-24",
+      "label": "Hop's Snorlax（移植：公開上位リスト）",
+      "archetype": "Hop's Snorlax colorless／Dudunsparce エンジン＋ Trevenant/Phantump",
+      "energyIdentity": "特殊エネルギー中心（Mist／Telepath／Legacy）",
+      "rationale": "【移植・出典明記】公開上位リスト Hop's Snorlax を、パイロット（打ち手）検証の台として移植した版。B3（sub 53901430）でカード対応の進化パイロットを載せ相手μ≈550.5。以降 E17（エンジン優先度修正 greedy）、E18／E19（オフラインRL AWR／相手認識エンコーダ）でこのリスト上の打ち手を検証した。⚠️注意：E17–E19（6/23–24）は 6/22–6/25 のローダー破損ウィンドウ内にあり、E27 のデッキ確認は E20 以降しかカバーしていない＝これらの μ は“クリーン出荷”が未確認（フォールバック混入の可能性）。デッキは我々の設計ではない。",
+      "origin": "ported",
+      "ladder": {
+        "submissionRef": "53901430",
+        "mu": 550.5,
+        "asOf": "2026-06-24",
+        "status": "archived",
+        "note": "移植リスト上の打ち手検証（B3≈550.5）。E17–E19 は破損ウィンドウ内でクリーン出荷未確認。"
+      },
+      "changes": [
+        {
+          "date": "2026-06-24",
+          "type": "note",
+          "reason": "origin=ported。公開 Hop's Snorlax リスト上でパイロット（進化／RL／相手認識）を検証。E17–E19 はローダー破損ウィンドウ内でクリーン出荷未確認。"
+        }
+      ],
+      "cards": [
+        {
+          "name": "Dunsparce",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{C}",
+          "hp": 60,
+          "retreat": null,
+          "weakness": "{F}",
+          "moves": [
+            {
+              "name": "Gnaw",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 10
+            },
+            {
+              "name": "Dig",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 30
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Hop's Phantump",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{P}",
+          "hp": 70,
+          "retreat": 2,
+          "weakness": "{D}",
+          "moves": [
+            {
+              "name": "Splashing Dodge",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 10
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Hop’s Snorlax",
+          "count": 2,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{C}",
+          "hp": 150,
+          "retreat": 4,
+          "weakness": "{F}",
+          "moves": [
+            {
+              "name": "Extra Helpings",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Dynamic Press",
+              "kind": "attack",
+              "cost": 3,
+              "damage": 140
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Dudunsparce",
+          "count": 3,
+          "category": "Pokémon",
+          "subtype": "Stage 1",
+          "type": "{C}",
+          "hp": 140,
+          "retreat": 3,
+          "weakness": "{F}",
+          "moves": [
+            {
+              "name": "Run Away Draw",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Land Crush",
+              "kind": "attack",
+              "cost": 3,
+              "damage": 90
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Hop's Trevenant",
+          "count": 2,
+          "category": "Pokémon",
+          "subtype": "Stage 1",
+          "type": "{P}",
+          "hp": 140,
+          "retreat": 2,
+          "weakness": "{D}",
+          "moves": [
+            {
+              "name": "Horrifying Revenge",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 30
+            },
+            {
+              "name": "Corner",
+              "kind": "attack",
+              "cost": 3,
+              "damage": 90
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Lillie's Determination",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/119.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/119_hires.png"
+        },
+        {
+          "name": "Boss’s Orders",
+          "count": 2,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/sv2/172.png",
+          "imageLarge": "https://images.pokemontcg.io/sv2/172_hires.png"
+        },
+        {
+          "name": "Brock’s Scouting",
+          "count": 2,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Colress’s Tenacity",
+          "count": 2,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Buddy-Buddy Poffin",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/sv5/144.png",
+          "imageLarge": "https://images.pokemontcg.io/sv5/144_hires.png"
+        },
+        {
+          "name": "Poké Pad",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-198/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-198/large"
+        },
+        {
+          "name": "Pokégear 3.0",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Hop’s Bag",
+          "count": 3,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Night Stretcher",
+          "count": 3,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Postwick",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Stadium",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Hop’s Choice Band",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Tool",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Mist Energy",
+          "count": 4,
+          "category": "Energy",
+          "subtype": "Special",
+          "type": "{C}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Telepath Psychic Energy",
+          "count": 4,
+          "category": "Energy",
+          "subtype": "Special",
+          "type": "{P}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Legacy Energy",
+          "count": 1,
+          "category": "Energy",
+          "subtype": "Special",
+          "type": "{A}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        }
+      ]
+    },
     {
       "id": "v6",
       "date": "2026-06-21",
@@ -22,12 +1284,13 @@
       "archetype": "mono-{F}（闘単）シングルプライズ・全たね・非ex アグロ／貪欲＋1手読み threat-aware",
       "energyIdentity": "{F} のみ／基本闘エネルギー 18枚（実証済みの v1 構成）",
       "rationale": "v1.1（攻撃効率強化・一貫性は v1 と同一）のラダー検証が決着：μ=491（μ₀=600 割れ）＝退行。実対面（自分の v1.1 対戦31試合）は今も 87% が mono-{W} メガユキノオー ex だが、v1.1 はこれに 37% しか勝てず（v1 は同デッキに 60% 勝ち越し）＝Throh/Sawk/Solrock への差し替えが“全試合の約9割を占める支配デッキ”との相性を悪化させた。一貫性が v1 と完全同一でも退行した事実は『打点を上げるだけでは μ は上がらず、対・支配デッキのマッチアップこそが μ を決める（しかもそれはラダーでしか見えない）』ことを示す。デッキ変更は v2/v3/v1.1 と4回連続で退行したため、実証済みチャンピオン v1（μ≈672）へ revert・再提出して出荷デッキを固定。Deck-20% の価値は『設計→ladder検証→劣れば復帰』という規律ある自然実験そのもの。以後は Model（打ち手）と Writeup に集中する。",
+      "origin": "own",
       "ladder": {
         "submissionRef": "53774986",
         "mu": 672.3,
         "asOf": "2026-06-21",
         "status": "champion",
-        "note": "実証済み最強（μ≈672）。v1.1 退行(μ491)を受けて復帰・再提出し、latest-2 窓に v1 を確保。"
+        "note": "実証済み最強（μ≈672）。v1.1 退行(μ491)を受けて復帰・再提出し、latest-2 窓に v1 を確保。🆕 E31（sub 54347962, 2026-07-05）＝ローダー修正後に初めて“正しく greedy+v1 を出荷できた”再ベースライン（E20–E25 の greedy 読みは全てフォールバック混入で無効だった）。672 は序盤ラダーのアーティファクトで真の実力は μ≈470–550＝現在の committed 出荷デッキ。"
       },
       "changes": [
         {
@@ -279,6 +1542,7 @@
       "archetype": "mono-{F}（闘単）シングルプライズ・アグロ／貪欲パイロット＋1手読み threat-aware",
       "energyIdentity": "{F} のみ／基本闘エネルギー 18枚（v1 と同一＝一貫性を一切犠牲にしない）",
       "rationale": "実メタ調査（自分の対戦55試合, 100%デッキ復元）で、ラダーは 89% が mono-{W} メガユキノオー ex（350HP・2プライズ・弱点{M}）で、v1 はこれに 60% 勝ち越し（Wilson CI 0.46–0.73）と判明。プール解析で v1 が“最高効率のクリーンなたねアタッカー”を取りこぼしていたと分かった——Sawk(90打点@1エネ) / Throh(120@2) / Solrock(70@1) は、v1 の Hitmontop/Lunatone/Relicanth(50/50/30) より遥かに効率的。v1.1 は最弱3種をこの最高効率3種に差し替え、闘エネは18枚のまま。全てたねカードゆえ一貫性は完全に同一（マリガン6.99%・先1準備86.1%・期待エネ2.10）で、打点クロックだけを大幅改善——350HPのメガを Throh 120×3 で押し切る速度。エネを削って退行した v3 とは別物（v3はエネ18→13）。パイロットは貪欲＋1手読み threat-aware（相手のたねが次ターンに自分のアクティブをKOできるなら健全なベンチへ退避）。BC はラダーで退行（μ539）したため off。実機での検証は ladder μ のみが判定（シミュA/Bはラダーを予測しない）。sub 53885541 で提出、μ₀=600 から収束中。v1 の 672 を超えれば採用、劣れば v1 へ復帰。",
+      "origin": "own",
       "ladder": {
         "submissionRef": "53885541",
         "mu": 491.3,
@@ -524,6 +1788,7 @@
       "archetype": "mono-{F}（闘単）シングルプライズ・アグロ／初の学習方策（behavior cloning）で運用",
       "energyIdentity": "{F} のみ／基本闘エネルギー 18枚（デッキは実証済みの v1）",
       "rationale": "実証済みの最強デッキ v1（ライブμ≈672）はそのままに、パイロット（打ち手）を初の学習方策に置き換えた版。公開された上位エピソード（3日分・14,336試合・541,603手）から“勝者の手だけ”を行動クローン（BC）で学習し、自分視点のみの固定長盤面ベクトル＋合法選択肢ごとのポインタ型スコアラーで次の一手を選ぶ（相手の手札など隠れ情報はエンジン側でマスク済み＝不参照）。模倣精度は検証 val 0.605（無情報基準0.18）。重要なのは実戦での強さで、実機エンジンの同一デッキA/B（CI・150戦）で従来の貪欲パイロットに 72%（W/D/L 108/0/42・95%CI 0.643–0.786）で勝ち越し、G1の方策ゲートを突破した。「模倣精度は対戦勝率を予測しない」という通説に反し、今回は実戦勝率へ強くプラス転換。最強デッキ（v1）×最強パイロット（BC）の組み合わせで、実フィールドの μ が v1 の 672 を超えるか検証中。学習は Kaggle 無料CPU で完結し、提出物に numpy 推論を同梱（万一numpyが無くても貪欲にフォールバックして絶対に落ちない設計）。",
+      "origin": "own",
       "ladder": {
         "submissionRef": "53868288",
         "mu": 539.0,
@@ -781,6 +2046,7 @@
       "archetype": "mono-{F}（闘単）シングルプライズ・アグロ（高打点・非ex）",
       "energyIdentity": "{F} のみ／基本闘エネルギー 13枚",
       "rationale": "ライブのラダーμ（実際の対戦レーティング）で判明：v1（単プライズ闘単）=693 に対し、v2（Mega Lucario ex）=578→約500 と 600 を割り込んで下落＝v2 は“改善”ではなく退行だった。サンプル戦で 42% だったのは『別の高HP ex デッキとの殴り合い』という非代表的な相手だったため。さらに自己対戦A/B（sim）はラダーを予測しないことも判明（v2 は sim では v1 に 73% 勝つのに実ラダーでは最下位）。v2 が弱い理由＝greedy パイロットに不利な3点：①多プライズ（ex は取られると2枚渡す）②進化依存（HP70・打点10 の Riolu が1ターン耐えて進化する必要があり、崩されると瓦解）③単一の脆い大型アタッカーに集約。そこで v3 は『ラダーで実証済みのv1 の堅牢な全たね・単プライズ型』に戻し、v1 唯一の弱点（最大70打点）だけをプール内のクリーンな高打点たねで底上げ：Sandy Shocks（場にエネ3枚以上で 130）・Sawk（闘1個で 90・無条件）・Terrakion（100）・Landorus（120）。ex も進化もコインフリップも無し、全アタッカー単プライズ。たね18枚でマリガン率 6.99%（v1/v2 の16%から改善）。デッキ強さはラダーμでしか判定できないため、v1（μ693）を超えられるかの“較正実験”として投入。",
+      "origin": "own",
       "ladder": {
         "submissionRef": "53820794",
         "mu": 545.6,
@@ -1090,6 +2356,7 @@
       "archetype": "mono-{F}（闘単）Mega Lucario ex アグロ",
       "energyIdentity": "{F} のみ／基本闘エネルギー 11枚",
       "rationale": "デッキA/B診断で v1（単プライズたね・最大70ダメージ）が、サンプルの Mega Abomasnow ex（HP350・200ダメージ）に同一パイロット下で 2% しか勝てないと判明。デッキこそがボトルネックだった。そこでプール内で最もパイロット適性の高い高出力アタッカー Mega Lucario ex（Riolu から1進化・HP340・mono-{F}・Aura Jab {F}=130／Mega Brave {F}{F}=270）を主軸に採用。greedy パイロット（毎ターン手貼り1枚→最大ダメージで殴る）でも 130→270 に無理なく到達し、HP340 で取られにくい。サンプルの Mega ex ラインをパイロットは既に勝率98%で回せているため、パイロット改修ゼロでデッキ交換だけで大幅な勝率増を狙う。現行スタンダード（Mega Evolution 期）の定石比率（ポケモン12–20／トレーナー30–35／エネ8–15／ドロー8–12）に沿い、たね13枚でマリガン率16%に抑えた。",
+      "origin": "own",
       "ladder": {
         "submissionRef": "53814269",
         "mu": 478.9,
@@ -1388,6 +2655,7 @@
       "archetype": "mono-{F}（闘単）シングルプライズ・アグロ",
       "energyIdentity": "{F} のみ／基本闘エネルギー 18枚",
       "rationale": "たね単エネのアタッカーだけで構成し、進化を挟まず1ターン目から殴れる速度と事故率の低さを優先した構築。全アタッカーが {F} タイプなので相手の弱点を一貫して突け、サイドを1枚しか渡さないシングルプライズで取られ負けしにくい。Cheren / Lillie's Determination / Urbain でドローを回し、Fighting Gong でエネ加速、Switch と Poké Pad で動きの安定を確保する。ex・Mega・ACE SPEC は採用せず、条件付きの派手な技も避けて「無条件で殴れる」カードに絞っている。",
+      "origin": "own",
       "ladder": {
         "submissionRef": "53774986",
         "mu": 672.3,
