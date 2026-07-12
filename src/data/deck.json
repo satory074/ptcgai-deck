@@ -16,6 +16,312 @@
   },
   "snapshots": [
     {
+      "id": "megalucario-e39",
+      "date": "2026-07-13",
+      "label": "Mega Lucario ex（移植：公開 1084.5 Baseline）— 戦略ピボット E39",
+      "archetype": "Mega Lucario ex（Riolu 1進化）＋ Makuhita/Hariyama・Lunatone/Solrock の mono-{F} アグロ",
+      "energyIdentity": "{F} 単色／基本闘エネルギー 14枚",
+      "rationale": "【移植・出典明記】makthanithin 氏の公開ノートブック「1084.5 Baseline」（2026-07-11 更新）の Mega Lucario ex デッキ＋ポリシーを、我々の never-crash シャシー上に一字一句同一で移植した版。デッキは我々の設計ではない——貢献は移植の忠実性検証（オリジナル相手のミラー 48.7%・n=199、own-replay frame_check 100.0% pilot-identity）と評価規律にある。経緯：E33-E37 の5レイヤーは各標的モードを実際に縮めたが集計は横ばい・ボーダーは公開レシピの普及で上昇（1055→1081）。ゼロベース再調査（07-13）でその普及源＝本ベースを特定し、旧 Archaludon 基盤の構造的弱点（実たね5枚＝初動即死・マリガン52.5%）を実たね11枚・マリガン22.2%で解消する新基盤として採用（E39, sub 54591391）。",
+      "origin": "ported",
+      "ladder": {
+        "submissionRef": "54591391",
+        "mu": null,
+        "asOf": "2026-07-13",
+        "status": "converging",
+        "note": "E39：出荷直後・収束待ち（判定は相手μ統制で E37=54553336 と比較、~7/15）。出荷 committed deck.csv は v1 のまま＝これは実験トラック。"
+      },
+      "changes": [],
+      "cards": [
+        {
+          "name": "Riolu",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 80,
+          "retreat": 2,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Accelerating Stab",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 30
+            }
+          ],
+          "image": "https://images.pokemontcg.io/sv8pt5/50.png",
+          "imageLarge": "https://images.pokemontcg.io/sv8pt5/50_hires.png"
+        },
+        {
+          "name": "Solrock",
+          "count": 3,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 110,
+          "retreat": 1,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Cosmic Beam",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 70
+            }
+          ],
+          "image": "https://images.pokemontcg.io/me1/75.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/75_hires.png"
+        },
+        {
+          "name": "Lunatone",
+          "count": 2,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 110,
+          "retreat": 1,
+          "weakness": "{G}",
+          "moves": [
+            {
+              "name": "Lunar Cycle",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Power Gem",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 50
+            }
+          ],
+          "image": "https://images.pokemontcg.io/me1/74.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/74_hires.png"
+        },
+        {
+          "name": "Makuhita",
+          "count": 2,
+          "category": "Pokémon",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": 80,
+          "retreat": 2,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Corkscrew Punch",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 10
+            },
+            {
+              "name": "Confront",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 30
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Mega Lucario ex",
+          "count": 4,
+          "category": "Pokémon",
+          "subtype": "Stage 1",
+          "type": "{F}",
+          "hp": 340,
+          "retreat": 2,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Aura Jab",
+              "kind": "attack",
+              "cost": 1,
+              "damage": 130
+            },
+            {
+              "name": "Mega Brave",
+              "kind": "attack",
+              "cost": 2,
+              "damage": 270
+            }
+          ],
+          "image": "https://images.pokemontcg.io/me1/77.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/77_hires.png"
+        },
+        {
+          "name": "Hariyama",
+          "count": 2,
+          "category": "Pokémon",
+          "subtype": "Stage 1",
+          "type": "{F}",
+          "hp": 150,
+          "retreat": 3,
+          "weakness": "{P}",
+          "moves": [
+            {
+              "name": "Heave-Ho Catcher",
+              "kind": "ability",
+              "cost": null,
+              "damage": null
+            },
+            {
+              "name": "Wild Press",
+              "kind": "attack",
+              "cost": 3,
+              "damage": 210
+            }
+          ],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Carmine",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Lillie's Determination",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/119.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/119_hires.png"
+        },
+        {
+          "name": "Boss’s Orders",
+          "count": 3,
+          "category": "Trainer",
+          "subtype": "Supporter",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/sv2/172.png",
+          "imageLarge": "https://images.pokemontcg.io/sv2/172_hires.png"
+        },
+        {
+          "name": "Dusk Ball",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Fighting Gong",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/116.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/116_hires.png"
+        },
+        {
+          "name": "Premium Power Pro",
+          "count": 4,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Poké Pad",
+          "count": 2,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.scrydex.com/pokemon/me2pt5-198/small",
+          "imageLarge": "https://images.scrydex.com/pokemon/me2pt5-198/large"
+        },
+        {
+          "name": "Switch",
+          "count": 2,
+          "category": "Trainer",
+          "subtype": "Item",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/me1/130.png",
+          "imageLarge": "https://images.pokemontcg.io/me1/130_hires.png"
+        },
+        {
+          "name": "Gravity Mountain",
+          "count": 1,
+          "category": "Trainer",
+          "subtype": "Stadium",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Hero’s Cape",
+          "count": 1,
+          "category": "Trainer",
+          "subtype": "Tool",
+          "type": null,
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": null,
+          "imageLarge": null
+        },
+        {
+          "name": "Basic {F} Energy",
+          "count": 14,
+          "category": "Energy",
+          "subtype": "Basic",
+          "type": "{F}",
+          "hp": null,
+          "retreat": null,
+          "weakness": null,
+          "moves": [],
+          "image": "https://images.pokemontcg.io/xy12/96.png",
+          "imageLarge": "https://images.pokemontcg.io/xy12/96_hires.png"
+        }
+      ]
+    },
+    {
       "id": "archaludon",
       "date": "2026-07-06",
       "label": "Archaludon ex（移植：tomatomato 公開エージェント）— 実測ベスト",
