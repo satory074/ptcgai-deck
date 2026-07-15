@@ -2,7 +2,7 @@
 import TypeBadge from "./TypeBadge.astro";
 import { originMeta } from "@/lib/deck";
 
-interface Ladder { submissionRef: string; mu: number; asOf: string; status: string; note?: string }
+interface Ladder { submissionRef: string; mu: number | null; asOf: string; status: string; note?: string }
 interface Props {
   archetype: string;
   versionLabel: string;
@@ -82,7 +82,7 @@ const dotVar =
             aria-hidden="true"></span>
           ラダー{statusJp}
         </span>
-        <span class="text-[var(--color-text-muted)]">μ <span class="tnum text-[var(--color-text)]">{lad.mu}</span></span>
+        <span class="text-[var(--color-text-muted)]">μ <span class="tnum text-[var(--color-text)]">{lad.mu != null ? lad.mu : "収束中"}</span></span>
         <span class="text-[var(--color-text-muted)]">submission <span class="tnum text-[var(--color-text)]">{lad.submissionRef}</span></span>
         <span class="text-[var(--color-text-subtle)]">（{lad.asOf} 時点）</span>
       </div>

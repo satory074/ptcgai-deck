@@ -38,7 +38,7 @@ const changeSchema = z.object({
 // 各スナップショットのラダーμ（過去版含め版ごとに表示）。省略時は top-level ladder にフォールバック。
 const ladderSchema = z.object({
   submissionRef: z.string(),
-  mu: z.number(),
+  mu: z.number().nullable(),
   asOf: z.string(),
   status: z.string(),
   note: z.string().optional(),

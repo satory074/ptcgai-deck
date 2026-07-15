@@ -44,7 +44,7 @@ export interface Change {
 /** ラダーμ（版ごと）。top-level ladder と同形。 */
 export interface Ladder {
   submissionRef: string;
-  mu: number;
+  mu: number | null;
   asOf: string;
   status: string;
   note?: string;
